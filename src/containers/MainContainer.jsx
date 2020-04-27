@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import BoardChoice from "../components/BoardSize.jsx";
 import GameContainer from "./GameContainer.jsx";
 
 const mapStateToProps = (state) => {
@@ -15,13 +16,15 @@ const mapDispatchToProps = (dispatch) => {
 class MainContainer extends Component {
   constructor(props) {
     super(props);
-    // console.log(props);
+    console.log(props);
     // console.log(this.props);
   }
 
   render() {
     return (
       <div className="game">
+        <h1 id="header">MegaMarket Loyalty Cards</h1>
+        <BoardChoice />
         <GameContainer />
       </div>
     );

@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
 
-import { gameReducers } from "./gameReducers";
+import gameReducers from "./gameReducers";
 
 const reducers = combineReducers({
   // if we had other reducers, they would go here
