@@ -23,7 +23,6 @@ class MainContainer extends Component {
     return (
       <div className="game">
         <GameContainer />
-        {/* <h1 id="header">MegaMarket Loyalty Cards</h1> */}
       </div>
     );
   }
