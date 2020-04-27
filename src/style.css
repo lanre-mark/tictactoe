@@ -1,0 +1,136 @@
+/* ------------- */
+/* Global Styles */
+/* ------------- */
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #5e3fde;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.game {
+  width: 600px;
+  height: 600px;
+  position: relative;
+}
+
+/* ---------- */
+/* Game Board */
+/* ---------- */
+
+.game-board {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: #020357;
+  border: 5px solid #25166c;
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.game-board__button {
+  width: 20%; /*33%;*/
+  height: 20%; /*33%;*/
+  background: transparent;
+  padding: 0;
+  border: 5px solid #25166c;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  outline: none;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.game-board__button:hover {
+  background: #01023a;
+}
+.game-board__button--disabled {
+  cursor: auto;
+}
+.game-board__button--disabled:hover {
+  background: #020357;
+}
+
+.game-state {
+  background: #fff;
+}
+
+/* ------- */
+/* X and O */
+/* ------- */
+
+.o {
+  width: 60%;
+  transform: rotate(-90deg);
+}
+
+.o__line {
+  fill: none;
+  stroke: #fba919;
+  stroke-width: 20;
+  stroke-miterlimit: 10;
+  stroke-dasharray: 126;
+  stroke-linecap: round;
+}
+
+.o--enter .o__line {
+  stroke-dashoffset: 126;
+}
+.o--enter-active .o__line {
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 0.7s cubic-bezier(0.85, 0, 0.15, 1);
+}
+.o--enter-done .o__line {
+  stroke-dashoffset: 0;
+}
+
+.x {
+  width: 55%;
+}
+
+.x__line {
+  fill: none;
+  stroke: #f05483;
+  stroke-width: 20;
+  stroke-linecap: round;
+  stroke-miterlimit: 10;
+  stroke-dasharray: 45;
+}
+
+.x--enter .x__line-1 {
+  stroke-dashoffset: 45;
+}
+.x--enter-active .x__line-1 {
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.x--enter-done .x__line-1 {
+  stroke-dashoffset: 0;
+}
+
+.x--enter .x__line-2 {
+  stroke-dashoffset: 45;
+}
+.x--enter-active .x__line-2 {
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 0.35s 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.x--enter-done .x__line-2 {
+  stroke-dashoffset: 0;
+}
