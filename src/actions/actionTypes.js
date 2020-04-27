@@ -1,0 +1,2 @@
+export const TICK_BOARD = "TICK_BOARD";
+export const SELECT_BOARD_SIZE = "SELECT_BOARD_SIZE";
