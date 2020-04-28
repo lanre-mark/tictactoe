@@ -5,7 +5,7 @@ const entry = ["./src/index.js"];
 
 const output = {
   path: path.resolve(__dirname, "dist"),
-  publicPath: "/",
+  publicPath: "/dist/",
   filename: "bundle.js",
 };
 
@@ -25,11 +25,8 @@ module.exports = {
       },
     ],
   },
+  devServer: {
+    contentBase: "./",
+    port: 4500,
+  },
 };
-
-//   devServer: {
-//     contentBase: "./dist",
-//     port: 4500,
-//   },
-//   devtool: "eval-source-map",
-// };
