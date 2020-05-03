@@ -39,6 +39,12 @@ const gameReducers = (state = initialState, action) => {
         spaces: [...Array(action.payload ** 2).keys()].map((d) => null),
         size: action.payload,
       };
+    case action.GAME_WINNER_STATE:
+      return state;
+    case action.GAME_DRAW_STATE:
+      return state;
+    case action.GAME_PLAYER_CHANGE:
+      return state;
     default:
       return state;
   }
