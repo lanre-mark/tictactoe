@@ -7,6 +7,7 @@ import * as gameActions from "../actions/actions";
 const mapStateToProps = (state) => {
   return {
     gameBoardSize: state.game.size,
+    gameBoardRatio: state.game.boardDistribution,
   };
 };
 

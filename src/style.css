@@ -1,3 +1,7 @@
+:root {
+  --proportion: 20%;
+}
+
 /* ------------- */
 /* Global Styles */
 /* ------------- */
@@ -19,8 +23,8 @@ body {
 }
 
 .game {
-  width: 600px;
-  height: 600px;
+  width: 800px;
+  height: 700px;
   position: relative;
 }
 
@@ -43,8 +47,8 @@ body {
 }
 
 .game-board__button {
-  width: 20%; /*33%;*/
-  height: 20%; /*33%;*/
+  width: var(--proportion); /*33%;*/
+  height: var(--proportion); /*33%;*/
   background: transparent;
   padding: 0;
   border: 5px solid #25166c;

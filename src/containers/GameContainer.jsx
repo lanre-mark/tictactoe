@@ -11,7 +11,6 @@ const mapStateToProps = (state) => {
     gameSessionIsADraw: state.game.drawGame,
     gameSessionPlayer: state.game.currentPlayer,
     gameSessionState: state.game.boardSlots,
-    gameBoardRatio: state.game.boardDistribution,
   };
 };
 

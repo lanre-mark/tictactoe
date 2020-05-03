@@ -6,7 +6,7 @@ const initialState = {
   currentPlayer: "x",
   boardSlots: [],
   size: 0,
-  boardDistribution: "100%",
+  boardDistribution: 100 + "%",
 };
 
 const gameReducers = (state = initialState, action) => {
@@ -49,6 +49,19 @@ const gameReducers = (state = initialState, action) => {
     case types.SELECT_BOARD_SIZE:
       // console.log("selected size of board");
       // return a brand new state
+      /**
+       * NOT sure if this is the best idea or way to do this
+       * but this hacky way solves this idea of flexibility in the gameBoard
+       * based on the size selected
+       */
+      document.documentElement.style.setProperty(
+        "--proportion",
+        parseFloat(100 / action.payload).toFixed(4) + "%"
+      );
+      /**
+       * END NOT SURE
+       */
+
       return {
         ...state,
         gameOver: false,
@@ -56,7 +69,7 @@ const gameReducers = (state = initialState, action) => {
         currentPlayer: "x",
         boardSlots: [...Array(action.payload ** 2).keys()].map((d) => null),
         size: action.payload,
-        boardDistribution: `${parseFloat(100 / action.payload, 2)}%`,
+        boardDistribution: parseFloat(100 / action.payload).toFixed(4) + "%",
       };
     case action.GAME_WINNER_STATE:
       return state;
