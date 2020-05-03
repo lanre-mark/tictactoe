@@ -13,7 +13,7 @@ const BoardSize = (props) => {
           data-value={sz}
           className="key__button"
           onClick={(e) => {
-            alert("youClickedMe @ 3!");
+            props.onSizeSelection(e, sz);
           }}
         >
           {sz}
