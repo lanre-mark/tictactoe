@@ -9,3 +9,18 @@ export const tickBoard = (baordId) => ({
   type: types.TICK_BOARD,
   payload: baordId,
 });
+
+export const gameWinner = () => ({
+  type: types.GAME_WINNER_STATE,
+  payload: true,
+});
+
+export const gameDrawn = () => ({
+  type: types.GAME_DRAW_STATE,
+  payload: true,
+});
+
+export const playerChanged = (nextPlayer) => ({
+  type: types.GAME_PLAYER_CHANGE,
+  payload: nextPlayer,
+});
