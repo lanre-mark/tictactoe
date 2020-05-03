@@ -5,30 +5,29 @@ import GameContainer from "./GameContainer.jsx";
 
 const mapStateToProps = (state) => {
   return {
-    gameBoardSize: state.gameBoardSize,
+    gameBoardSize: state.game.size,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   // dispatch the action of board size selection
+  // return dispatch();
 };
 
 class MainContainer extends Component {
   constructor(props) {
     super(props);
-    console.log(props);
-    // console.log(this.props);
+    console.log("props::", props);
   }
 
   render() {
     return (
       <div className="game">
-        <h1 id="header">MegaMarket Loyalty Cards</h1>
         <BoardChoice />
-        <GameContainer />
+        {/* <GameContainer /> */}
       </div>
     );
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(MainContainer);
+export default connect(mapStateToProps)(MainContainer); //mapDispatchToProps

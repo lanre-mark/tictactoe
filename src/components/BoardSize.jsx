@@ -1,33 +1,24 @@
 import React from "react";
 
 const BoardSize = (props) => {
+  console.log("BoardSize Props::", props);
+  const availableSizes = [3, 5, 7, 9, 11, 13, 15, 17];
   return (
     // <div id="boardsizecontrol">
-    <div class="keys">
-      <div data-key="65" class="key__button">
-        3
-      </div>
-      <div data-key="65" class="key__button">
-        5
-      </div>
-      <div data-key="65" class="key__button">
-        7
-      </div>
-      <div data-key="65" class="key__button">
-        9
-      </div>
-      <div data-key="65" class="key__button">
-        11
-      </div>
-      <div data-key="65" class="key__button">
-        13
-      </div>
-      <div data-key="65" class="key__button">
-        15
-      </div>
-      <div data-key="65" class="key__button">
-        17
-      </div>
+    <div className="keys">
+      {availableSizes.map((sz, ndx) => (
+        <div
+          key={ndx}
+          data-key="65"
+          data-value={sz}
+          className="key__button"
+          onClick={(e) => {
+            alert("youClickedMe @ 3!");
+          }}
+        >
+          {sz}
+        </div>
+      ))}
     </div>
     // </div>
   );

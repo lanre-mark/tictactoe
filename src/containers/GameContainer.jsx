@@ -3,11 +3,11 @@ import { connect } from "react-redux";
 
 const mapStateToProps = (state) => {
   return {
-    gameBoardSize: state.gameBoardSize,
-    gameSessionOver: state.gameOver,
-    gameSessionIsADraw: state.drawGame,
-    gameSessionPlayer: state.currentPlayer,
-    gameSessionState: state.spaces,
+    gameBoardSize: state.game.size,
+    gameSessionOver: state.game.gameOver,
+    gameSessionIsADraw: state.game.drawGame,
+    gameSessionPlayer: state.game.currentPlayer,
+    gameSessionState: state.game.spaces,
   };
 };
 
