@@ -4,7 +4,7 @@ import React from "react";
 // X Component
 // -----------
 
-export default X = () => {
+const X = () => {
   return (
     <svg
       className="x"
@@ -33,3 +33,5 @@ export default X = () => {
     </svg>
   );
 };
+
+export default X;
