@@ -4,7 +4,7 @@ const initialState = {
   gameOver: false,
   drawGame: false,
   currentPlayer: "x",
-  spaces: [],
+  boardSlots: [],
   size: 0,
 };
 
@@ -20,7 +20,7 @@ const gameReducers = (state = initialState, action) => {
   //     gameOver: false,
   //     drawGame: false,
   //     currentPlayer: "x",
-  //     spaces: [...Array(action.payload ** 2).keys()].map((d) => null),
+  //     boardSlots: [...Array(action.payload ** 2).keys()].map((d) => null),
   //     size: action.payload,
   //   };
   // }
@@ -28,7 +28,19 @@ const gameReducers = (state = initialState, action) => {
   switch (action.type) {
     case types.TICK_BOARD:
       console.log("Board was ticked/played");
-      return state;
+      // const newState = state;
+      // if (!newState.gameOver && !newState.drawGame) {
+      //   newState.boardSlots = [...currentState.boardSlots];
+      //   newState.boardSlots[index] = newState.currentPlayer;
+      //   newState.currentPlayer = newState.currentPlayer === "x" ? "o" : "x";
+      //   // if (this.winnerOnBoard(newState.boardSlots)) {
+      //   //   newState.gameOver = true;
+      //   // }
+      //   // if (this.noWinnerState(newState.boardSlots)) {
+      //   //   newState.drawGame = true;
+      //   // }
+      // }
+      return { ...state };
     case types.SELECT_BOARD_SIZE:
       // console.log("selected size of board");
       // return a brand new state
@@ -37,7 +49,7 @@ const gameReducers = (state = initialState, action) => {
         gameOver: false,
         drawGame: false,
         currentPlayer: "x",
-        spaces: [...Array(action.payload ** 2).keys()].map((d) => null),
+        boardSlots: [...Array(action.payload ** 2).keys()].map((d) => null),
         size: action.payload,
       };
     case action.GAME_WINNER_STATE:

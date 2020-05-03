@@ -10,7 +10,7 @@ const mapStateToProps = (state) => {
     gameSessionOver: state.game.gameOver,
     gameSessionIsADraw: state.game.drawGame,
     gameSessionPlayer: state.game.currentPlayer,
-    gameSessionState: state.game.spaces,
+    gameSessionState: state.game.boardSlots,
   };
 };
 
