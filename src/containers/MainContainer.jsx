@@ -26,10 +26,12 @@ class MainContainer extends Component {
   render() {
     return (
       <div className="game">
-        <BoardChoice
-          gameBoardSize={this.props.gameBoardSize}
-          onSizeSelection={this.props.onBoardSizeSelection}
-        />
+        {this.props.gameBoardSize === 0 && (
+          <BoardChoice
+            gameBoardSize={this.props.gameBoardSize}
+            onSizeSelection={this.props.onBoardSizeSelection}
+          />
+        )}
         {/* <GameContainer /> */}
       </div>
     );

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { GameBoard } from "../components/GameBoard.jsx";
 
 const mapStateToProps = (state) => {
   return {
@@ -23,7 +24,11 @@ class GameContainer extends Component {
   }
 
   render() {
-    return <div className="game-board"></div>;
+    return (
+      <div className="game-board">
+        <GameBoard />
+      </div>
+    );
   }
 }
 //, mapDispatchToProps
