@@ -27,9 +27,10 @@ const gameReducers = (state = initialState, action) => {
   // return state;
   switch (action.type) {
     case types.TICK_BOARD:
+      console.log("Board was ticked/played");
       return state;
     case types.SELECT_BOARD_SIZE:
-      console.log("selected size of board");
+      // console.log("selected size of board");
       // return a brand new state
       return {
         ...state,

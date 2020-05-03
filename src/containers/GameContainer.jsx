@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { GameBoard } from "../components/GameBoard.jsx";
+import GameBoard from "../components/GameBoard.jsx";
+
+import * as playActions from "../actions/actions";
 
 const mapStateToProps = (state) => {
   return {
@@ -12,24 +14,35 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch) => ({
   // dispatch the action of game board ticks
-};
+  playGame: (e, sz) => {
+    dispatch(playActions.tickBoard(sz));
+  },
+});
 
 class GameContainer extends Component {
   constructor(props) {
     super(props);
-    // console.log(props);
-    // console.log(this.props);
+    console.log("GameContainer::", props);
   }
 
   render() {
     return (
-      <div className="game-board">
-        <GameBoard />
+      <div className="game">
+        <div className="game-board">
+          {this.props.gameSessionState.map((space, index) => (
+            <GameBoard
+              key={`space-${index}`}
+              symbol={space}
+              index={index}
+              onPlayGame={this.props.playGame}
+            />
+          ))}
+        </div>
       </div>
     );
   }
 }
-//, mapDispatchToProps
-export default connect(mapStateToProps)(GameContainer);
+
+export default connect(mapStateToProps, mapDispatchToProps)(GameContainer);

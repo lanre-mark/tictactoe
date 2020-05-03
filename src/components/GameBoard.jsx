@@ -8,16 +8,17 @@ import O from "./OptionO.jsx";
 // Game Board
 // ----------
 
-export const GameBoard = (props) => {
+const GameBoard = (props) => {
+  console.log("GameBoard props::", props);
   return (
     <button
-      onClick={() => {
-        !props.symbol ? props.setSpace(props.index) : null;
+      onClick={(e) => {
+        !props.symbol ? props.onPlayGame(e, props.index) : null;
       }}
       className={`
-        game-board__button
-        ${props.symbol ? "game-board__button--disabled" : ""}
-      `}
+      game-board__button
+      ${props.symbol ? "game-board__button--disabled" : ""}
+    `}
     >
       <CSSTransition
         in={props.symbol === "x"}
@@ -41,3 +42,5 @@ export const GameBoard = (props) => {
     </button>
   );
 };
+
+export default GameBoard;
