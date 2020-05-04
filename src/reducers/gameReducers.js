@@ -13,6 +13,43 @@ const initialState = {
 
 /**
  *
+ * @param {String} cde The code generated for the direction from indexToCodify
+ * @param {Number} bz the size of the board
+ * returns an Index matching the particular direction in allDirections array/object
+ */
+const codifyToIndex = (cde, bz) => {
+  if (cde.charAt(0) === "D") {
+    // this is diagonal
+    return bz * 2 + parseInt(cde.charAt(1)) - 1;
+  } else {
+    return cde.charAt(0) === "H"
+      ? parseInt(cde.charAt(1)) * 2 - 2
+      : cde.charAt(0) === "V"
+      ? parseInt(cde.charAt(1)) * 2 - 1
+      : 0;
+  }
+};
+// console.log("Code H1 ==", codifyToIndex("H1", 5));
+
+/**
+ *
+ * @param {Number} ndx The current Index of the direction Array generated from the sessionBoard
+ * @param {Number} bz The size of the board user selected to play
+ * returns a code to identify the direction such that we can easily remap to the allDirections array/object
+ */
+const indexToCodify = (ndx, bz) => {
+  if (ndx + 1 > bz * 2) {
+    // if the index + 1 is greater than boardSize multiplied by 2
+    // that means its not any of the row OR column directions but diagonal
+    return ndx + 1 === bz * 2 + 1 ? "D1" : "D2";
+  } else {
+    //
+    return `${(ndx + 1) % 2 === 0 ? "V" : "H"}${Math.ceil((ndx + 1) / 2)}`;
+  }
+};
+
+/**
+ *
  * @param {*} strucData :: the array containing size of board
  * @param {*} cp :: computer player denotion
  * @param {*} up :: user player denotion
