@@ -50,6 +50,60 @@ const indexToCodify = (ndx, bz) => {
 
 /**
  *
+ * @param {Number} boardSize Size of board
+ * @param {Number} identifiedSpot Index to be played in the direction identified
+ * @param {String} directionCode code of the direction generated from indexToCodify
+ * return index for the gameBoardSession to be played by the computer
+ */
+const unPlayedPositionToindex = (boardSize, identifiedSpot, directionCode) => {
+  if (directionCode.charAt(0) === "D") {
+    return directionCode.charAt(1) === "1"
+      ? identifiedSpot * boardSize + identifiedSpot // L-R diagonal
+      : identifiedSpot * boardSize + (boardSize - identifiedSpot - 1); // R- L diagonal // reverse identifiedSport using boardSize as magnitude
+  } else {
+    return directionCode.charAt(0) === "H"
+      ? boardSize * (parseInt(directionCode.charAt(1)) - 1) + identifiedSpot // row direction // multiple the boardSize by number in the direction less by 1 for zero index and add the indentifiedSpot
+      : boardSize * identifiedSpot + (parseInt(directionCode.charAt(1)) - 1); // column direction // multiple the boardSize by the identifiedSpot and add the column in the code
+  }
+};
+
+const spoilerMove = (directRow) => {
+  for (let ii = 0; ii < directRow.plays.length; ii++) {
+    if (!directRow.plays[ii]) {
+      return unPlayedPositionToindex(directRow.plays.length, ii, directRow.pos);
+    }
+  }
+  return -1;
+};
+// const tst = { plays: ["x", "x", null, "x", "x"], pos: "V3" }; // "D2", "H3", "H1", "V4", "V3"
+// console.log(spoilerMove(tst));
+
+/**
+ *
+ * @param {Array/Collection} collection Colelction to be shuffled
+ * returns a randomly shuffled/rearranged collection
+ */
+const shuffle = function (collection) {
+  if (collection) {
+    for (let ii = collection.length - 1; ii > 0; ii--) {
+      const jj = Math.floor(Math.random() * ii);
+      [collection[ii], collection[jj]] = [collection[jj], collection[ii]];
+    }
+  }
+  return collection;
+};
+
+/**
+ *
+ * @param {Number} rangeSize Size of colelction or any number/interger argument to base the size of a random number
+ * returns a random number between 0 and rangeSize argument
+ */
+const randomizeType = (rangeSize) => {
+  return Number((Math.random() * (Math.floor(rangeSize) - 1)).toFixed(0));
+};
+
+/**
+ *
  * @param {*} strucData :: the array containing size of board
  * @param {*} cp :: computer player denotion
  * @param {*} up :: user player denotion
@@ -132,18 +186,17 @@ const winnerOnBoard = (strucData, cp, up) => {
   // need to make sure other player is not about to win
 
   // boardUnit is the number of plays required ina  direction
-  // boardUnit is the number of plays required ina  direction
   const newDirections = objDirections.map((arr, ndx) => ({
     ...arr,
     pls: 0, // total numbers of plays
     pos: indexToCodify(ndx, boardUnit),
   }));
-  console.log("here is the direction pattern :: ", newDirections);
+  // console.log("here is the direction pattern :: ", newDirections);
 
   const userBoard = [...newDirections].sort((a, b) => b.up - a.up);
-  console.log("Sorted by User Board :: ", userBoard);
+  // console.log("Sorted by User Board :: ", userBoard);
   const compuBoard = [...newDirections].sort((a, b) => b.cp - a.cp);
-  console.log("Sorted by Computer Board :: ", compuBoard);
+  // console.log("Sorted by Computer Board :: ", compuBoard);
 
   let compuMove = -1;
 
