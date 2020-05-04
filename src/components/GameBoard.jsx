@@ -9,7 +9,7 @@ import O from "./OptionO.jsx";
 // ----------
 
 const GameBoard = (props) => {
-  console.log("GameBoard props::", props);
+  // console.log("GameBoard props::", props);
   return (
     <button
       onClick={(e) => {

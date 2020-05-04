@@ -8,4 +8,12 @@ const persistedState = loadState();
 
 const store = createStore(reducers, persistedState, composeWithDevTools());
 
+// subscribe to the store object using Observer pattern
+store.subscribe(() => {
+  // console.log("Subscribed State :: ", store.getState());
+  saveState({
+    game: store.getState().game,
+  });
+});
+
 export default store;

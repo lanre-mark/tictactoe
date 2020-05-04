@@ -25,7 +25,7 @@ const mapDispatchToProps = (dispatch) => ({
 class GameContainer extends Component {
   constructor(props) {
     super(props);
-    console.log("GameContainer::", props);
+    // console.log("GameContainer::", props);
   }
 
   render() {
