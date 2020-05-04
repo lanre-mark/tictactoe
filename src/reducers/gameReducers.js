@@ -8,6 +8,7 @@ const initialState = {
   boardSlots: [],
   size: 0,
   boardDistribution: 100 + "%",
+  move: -1,
 };
 
 /**
@@ -19,8 +20,13 @@ const initialState = {
 const winnerOnBoard = (strucData, cp, up) => {
   const currentBoard = [];
   let allDirections = [],
+    objDirections = [],
     diagRight = [],
-    diagLeft = [];
+    diagLeft = [],
+    symadiag = 0,
+    symbbdiag = 0,
+    symadiag_ = 0,
+    symbbdiag_ = 0;
   const boardUnit = Math.sqrt(strucData.length);
   for (let ii = 0; ii < strucData.length; ii += boardUnit) {
     currentBoard.push(strucData.slice(ii, ii + boardUnit));
@@ -29,19 +35,50 @@ const winnerOnBoard = (strucData, cp, up) => {
   for (let rr = 0; rr < currentBoard.length; rr++) {
     const rowArr = [],
       colArr = [];
+    let syma = 0,
+      symbb = 0,
+      syma_ = 0,
+      symbb_ = 0;
     for (let cc = 0; cc < currentBoard.length; cc++) {
+      // count the number of up (user plays) and cp (computed plays) in direction of row currentBoard[rr][cc]
+      currentBoard[rr][cc] === up
+        ? syma++
+        : currentBoard[rr][cc] === cp
+        ? symbb++
+        : null;
+      // count the number of up (user plays) and cp (computed plays) in direction of column currentBoard[cc][rr]
+      currentBoard[cc][rr] === up
+        ? syma_++
+        : currentBoard[cc][rr] === cp
+        ? symbb_++
+        : null;
       rowArr.push(currentBoard[rr][cc]);
       colArr.push(currentBoard[cc][rr]);
     }
     allDirections.push(rowArr);
+    objDirections.push({ plays: rowArr, up: syma, cp: symbb });
     allDirections.push(colArr);
+    objDirections.push({ plays: colArr, up: syma_, cp: symbb_ });
+    // count the number of up (user plays) and cp (computed plays) in direction of L-R diagonal currentBoard[rr][rr]
+    currentBoard[rr][rr] === up
+      ? symadiag++
+      : currentBoard[rr][rr] === cp
+      ? symbbdiag++
+      : null;
+    // count the number of up (user plays) and cp (computed plays) in direction of R-L diagonal currentBoard[rr][currentBoard.length - 1 - rr]
+    currentBoard[rr][currentBoard.length - 1 - rr] === up
+      ? symadiag_++
+      : currentBoard[rr][currentBoard.length - 1 - rr] === cp
+      ? symbbdiag_++
+      : null;
     diagRight.push(currentBoard[rr][rr]);
     diagLeft.push(currentBoard[rr][currentBoard.length - 1 - rr]);
   }
   allDirections.push(diagRight);
+  objDirections.push({ plays: diagRight, up: symadiag, cp: symbbdiag });
   allDirections.push(diagLeft);
-  // console.log("================");
-  // console.log(allDirections);
+  objDirections.push({ plays: diagLeft, up: symadiag_, cp: symbbdiag_ });
+
   const win = allDirections.some((d) => {
     return d.every((ch) => {
       return ch === d[0] && d[0] != null;
@@ -58,12 +95,11 @@ const winnerOnBoard = (strucData, cp, up) => {
   // need to make sure other player is not about to win
 
   // boardUnit is the number of plays required ina  direction
-  const newDirections = allDirections.map((arr, ndx) => ({
-    plays: arr,
-    up: arr.filter((p) => p == up).length, // number of user plays in direction
-    cp: arr.filter((p) => p == cp).length, // number of computer plays in direction
+  // boardUnit is the number of plays required ina  direction
+  const newDirections = objDirections.map((arr, ndx) => ({
+    ...arr,
     pls: 0, // total numbers of plays
-    pos: boardCodifiy(ndx, boardUnit),
+    pos: indexToCodify(ndx, boardUnit),
   }));
   console.log("here is the direction pattern :: ", newDirections);
 
@@ -72,19 +108,9 @@ const winnerOnBoard = (strucData, cp, up) => {
   const compuBoard = [...newDirections].sort((a, b) => b.cp - a.cp);
   console.log("Sorted by Computer Board :: ", compuBoard);
 
-  return [win, draw]; // will be returning a double tuple of winState, drawState, nextComputerPlay
-};
+  let compuMove = -1;
 
-const boardCodifiy = (ndx, bz) => {
-  if (ndx + 1 > bz * 2) {
-    if (ndx + 1 === bz * 2 + 1) {
-      return "D1";
-    } else {
-      return "D2";
-    }
-  } else {
-    return (ndx + 1) % 2 === 0 ? 0;
-  }
+  return [win, draw, compuMove]; // will be returning a double tuple of winState, drawState, nextComputerPlay
 };
 
 const gameReducers = (state = initialState, action) => {

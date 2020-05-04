@@ -12,6 +12,7 @@ const mapStateToProps = (state) => {
     gameSessionPlayer: state.game.currentPlayer,
     gameSessionState: state.game.boardSlots,
     gameComputerDenote: state.game.computerDenote,
+    gameSessionMove: state.game.move,
   };
 };
 
@@ -20,13 +21,23 @@ const mapDispatchToProps = (dispatch) => ({
   playGame: (e, sz) => {
     dispatch(playActions.tickBoard(sz));
   },
+  computeGame: () => {
+    dispatch(playActions.autoTickBoard());
+  },
 });
 
 class GameContainer extends Component {
   constructor(props) {
     super(props);
     // console.log("GameContainer::", props);
+    // this.props.computeGame
   }
+
+  computeAutoMove() {}
+
+  shouldComponentUpdate() {}
+
+  componentDidUpdate() {}
 
   render() {
     return (
