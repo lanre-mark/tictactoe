@@ -8,7 +8,7 @@ export const loadState = () => {
     }
     const stateObj = JSON.parse(serializedState);
     // temporarily return null until computer simulation is completed
-    return null; //stateObj;
+    return undefined; //stateObj;
   } catch (err) {
     // console.log("loading State Error ::", err);
     return undefined;

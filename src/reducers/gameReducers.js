@@ -58,16 +58,33 @@ const winnerOnBoard = (strucData, cp, up) => {
   // need to make sure other player is not about to win
 
   // boardUnit is the number of plays required ina  direction
-  const newDirections = allDirections.map((arr) => ({
+  const newDirections = allDirections.map((arr, ndx) => ({
     plays: arr,
-    up: arr.filter((p) => p === up).length, // number of user plays in direction
-    cp: arr.filter((p) => p === cp).length, // number of computer plays in direction
-    pls: up + cp, // total numbers of plays
+    up: arr.filter((p) => p == up).length, // number of user plays in direction
+    cp: arr.filter((p) => p == cp).length, // number of computer plays in direction
+    pls: 0, // total numbers of plays
+    pos: boardCodifiy(ndx, boardUnit),
   }));
-
   console.log("here is the direction pattern :: ", newDirections);
 
+  const userBoard = [...newDirections].sort((a, b) => b.up - a.up);
+  console.log("Sorted by User Board :: ", userBoard);
+  const compuBoard = [...newDirections].sort((a, b) => b.cp - a.cp);
+  console.log("Sorted by Computer Board :: ", compuBoard);
+
   return [win, draw]; // will be returning a double tuple of winState, drawState, nextComputerPlay
+};
+
+const boardCodifiy = (ndx, bz) => {
+  if (ndx + 1 > bz * 2) {
+    if (ndx + 1 === bz * 2 + 1) {
+      return "D1";
+    } else {
+      return "D2";
+    }
+  } else {
+    return (ndx + 1) % 2 === 0 ? 0;
+  }
 };
 
 const gameReducers = (state = initialState, action) => {
@@ -95,6 +112,11 @@ const gameReducers = (state = initialState, action) => {
         newState.boardSlots = [...state.boardSlots];
         newState.boardSlots[action.payload] = newState.currentPlayer;
         newState.currentPlayer = newState.currentPlayer === "x" ? "o" : "x";
+        [newState.gameOver, newState.drawGame] = winnerOnBoard(
+          newState.boardSlots,
+          newState.computerDenote,
+          newState.computerDenote === "x" ? "o" : "x"
+        );
         // if (this.winnerOnBoard(newState.boardSlots)) {
         //   newState.gameOver = true;
         // }
