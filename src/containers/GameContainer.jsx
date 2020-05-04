@@ -22,7 +22,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(playActions.tickBoard(sz));
   },
   computeGame: () => {
-    dispatch(playActions.autoTickBoard());
+    dispatch(playActions.generateMove());
   },
 });
 
@@ -30,14 +30,20 @@ class GameContainer extends Component {
   constructor(props) {
     super(props);
     // console.log("GameContainer::", props);
-    // this.props.computeGame
   }
 
-  computeAutoMove() {}
-
-  shouldComponentUpdate() {}
-
-  componentDidUpdate() {}
+  componentDidUpdate() {
+    setTimeout(() => {
+      if (
+        !this.props.gameSessionOver &&
+        !this.props.gameSessionIsADraw &&
+        this.props.gameComputerDenote === this.props.gameSessionPlayer
+      ) {
+        // comnputer plays while game is not a draw nor game's session is over
+        this.props.computeGame();
+      }
+    }, 500);
+  }
 
   render() {
     return (

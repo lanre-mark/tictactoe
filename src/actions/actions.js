@@ -20,12 +20,14 @@ export const gameDrawn = () => ({
   payload: true,
 });
 
-export const playerChanged = (nextPlayer) => ({
-  type: types.GAME_PLAYER_CHANGE,
-  payload: nextPlayer,
-});
+// export const playerChanged = (nextPlayer) => ({
+//   type: types.GAME_PLAYER_CHANGE,
+//   payload: nextPlayer,
+// });
 
-export const generateMove = () => ({
-  type: types.GENERATE_TICK,
-  payload: 0,
-});
+export const generateMove = () => {
+  return {
+    type: types.GENERATE_TICK,
+    payload: 0,
+  };
+};

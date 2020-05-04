@@ -218,11 +218,11 @@ const gameReducers = (state = initialState, action) => {
         boardDistribution: parseFloat(100 / action.payload).toFixed(4) + "%",
         computerDenote: state.currentPlayer === "x" ? "o" : "x",
       };
-    case action.GAME_WINNER_STATE:
+    case types.GAME_WINNER_STATE:
       return state;
-    case action.GAME_DRAW_STATE:
+    case types.GAME_DRAW_STATE:
       return state;
-    case action.GAME_PLAYER_CHANGE:
+    case types.GENERATE_TICK:
       return state;
     default:
       return state;
