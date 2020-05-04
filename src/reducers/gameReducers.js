@@ -4,6 +4,7 @@ const initialState = {
   gameOver: false,
   drawGame: false,
   currentPlayer: "x",
+  computerDenote: "",
   boardSlots: [],
   size: 0,
   boardDistribution: 100 + "%",
@@ -28,7 +29,7 @@ const gameReducers = (state = initialState, action) => {
   // return state;
   switch (action.type) {
     case types.TICK_BOARD:
-      console.log("Board was ticked/played");
+      // console.log("Board was ticked/played");
       const newState = state;
       if (!newState.gameOver && !newState.drawGame) {
         newState.boardSlots = [...state.boardSlots];
@@ -70,6 +71,7 @@ const gameReducers = (state = initialState, action) => {
         boardSlots: [...Array(action.payload ** 2).keys()].map((d) => null),
         size: action.payload,
         boardDistribution: parseFloat(100 / action.payload).toFixed(4) + "%",
+        computerDenote: state.currentPlayer === "x" ? "o" : "x",
       };
     case action.GAME_WINNER_STATE:
       return state;

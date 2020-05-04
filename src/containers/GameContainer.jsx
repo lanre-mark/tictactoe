@@ -11,6 +11,7 @@ const mapStateToProps = (state) => {
     gameSessionIsADraw: state.game.drawGame,
     gameSessionPlayer: state.game.currentPlayer,
     gameSessionState: state.game.boardSlots,
+    gameComputerDenote: state.game.computerDenote,
   };
 };
 
@@ -36,6 +37,8 @@ class GameContainer extends Component {
               key={`space-${index}`}
               symbol={space}
               index={index}
+              computeSymbol={this.props.gameComputerDenote}
+              playSymbol={this.props.gameSessionPlayer}
               onPlayGame={this.props.playGame}
             />
           ))}

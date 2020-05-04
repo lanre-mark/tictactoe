@@ -21,7 +21,7 @@ const mapDispatchToProps = (dispatch) => ({
 class MainContainer extends Component {
   constructor(props) {
     super(props);
-    console.log("MainContainer props::", props);
+    // console.log("MainContainer props::", props);
   }
 
   render() {

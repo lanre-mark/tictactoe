@@ -13,7 +13,10 @@ const GameBoard = (props) => {
   return (
     <button
       onClick={(e) => {
-        !props.symbol ? props.onPlayGame(e, props.index) : null;
+        // !props.symbol && props.playSymbol !== props.computeSymbol  For integrating Computer Plays
+        !props.symbol && props.playSymbol !== props.computeSymbol
+          ? props.onPlayGame(e, props.index)
+          : null;
       }}
       className={`
       game-board__button
