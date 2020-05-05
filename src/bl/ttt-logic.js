@@ -141,7 +141,7 @@ const freeStyleMove = (state) => {
     }, //no user nor compuer plays
   };
 
-  while (trials <= 3) {
+  while (trials <= Object.keys(freeSyles).length) {
     availDirection = freeSyles[randomizeType(Object.keys(freeSyles).length)](
       state.slice()
     );
@@ -158,44 +158,6 @@ const freeStyleMove = (state) => {
     }
     trials++;
   }
-
-  // availDirection = state.reduce((availDirections, currentDirection) => {
-  //   if (currentDirection.plays.every((position) => position === cp)) {
-  //     availDirections.push(currentDirection);
-  //   }
-  //   return availDirections;
-  // }, []);
-  // if (availDirection.length === 0) {
-  //   availDirection = state.reduce((availDirections, currentDirection) => {
-  //     if (currentDirection.plays.every((position) => !position)) {
-  //       availDirections.push(currentDirection);
-  //     }
-  //     return availDirections;
-  //   }, []);
-  // }
-  // } else if (type === FREE_STYLE.INTERMEDIATE) {
-  //   // means we want to take the entire board and fill using the player i.e. computeDenote
-  //   // however, we fill from the least available to the most available
-  // }
-
-  // if (availDirection.length > 0) {
-  //   const randomDirection = randomizeType(availDirection.length);
-  //   // console.log(
-  //   //   "availDirection[randomDirection].plays",
-  //   //   availDirection[randomDirection].plays
-  //   // );
-  //   // console.log(randomizeType(state[randomDirection].plays.length));
-  //   // const shuffled = shuffle(availDirection[randomDirection].plays);
-  //   // console.log(shuffled);
-  //   // console.log(unplayedSlotsOnly(shuffled));
-  //   // console.log(randomizeType(shuffle(state[randomDirection].plays).length));
-
-  //   return unPlayedPositionToindex(
-  //     availDirection[randomDirection].plays.length,
-  //     unplayedSlotsOnly(availDirection[randomDirection].plays),
-  //     availDirection[randomDirection].pos
-  //   );
-  // }
   return -2;
 };
 
@@ -324,7 +286,7 @@ const winnerOnBoard = (strucData, cp, up) => {
       compuMove = freeStyleMove(newDirections); //, FREE_STYLE.COMMENCE);
       draw = compuMove === -2 ? true : false;
     }
-    // console.log("Proposed Moved :: ", compuMove);
+    console.log("Proposed Moved :: ", compuMove);
   }
   return [win, draw, compuMove]; // will be returning a double tuple of winState, drawState, nextComputerPlay
 };
