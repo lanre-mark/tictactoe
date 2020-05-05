@@ -137,13 +137,22 @@ const freeStyleMove = (state, cp) => {
   // if (type === FREE_STYLE.COMMENCE) {
   // means we're only in the empty directions
   availDirection = state.reduce((availDirections, currentDirection) => {
-    if (
-      currentDirection.plays.every((position) => !position || position === cp)
-    ) {
+    // give priority firs tto previously started moves/directions of the computer
+    if (currentDirection.plays.every((position) => position === cp)) {
       availDirections.push(currentDirection);
     }
     return availDirections;
   }, []);
+  if (availDirection.length === 0) {
+    // if there is/are no directions in play solely by the computer, then
+    // consider the empty postions as well
+    availDirection = state.reduce((availDirections, currentDirection) => {
+      if (currentDirection.plays.every((position) => !position)) {
+        availDirections.push(currentDirection);
+      }
+      return availDirections;
+    }, []);
+  }
   // console.log("Available Directions from freeStyle :: ", availDirection);
   // } else if (type === FREE_STYLE.INTERMEDIATE) {
   //   // means we want to take the entire board and fill using the player i.e. computeDenote
@@ -287,17 +296,17 @@ const winnerOnBoard = (strucData, cp, up) => {
     } else if (compuBoard[0].up === boardUnit - 1) {
       //i.e. user requires only one step for USER to WIN
       // then be defensive
-      console.log("Proceding with spoilerMove for checkout");
+      // console.log("Proceding with spoilerMove for checkout");
       compuMove = spoilerMove(compuBoard[0]);
     } else {
       // do a freestyle for the User but using the most accomplished direction
       // use the already sorted
       // console.log("Proceding with freeStyleMove");
       compuMove = freeStyleMove(newDirections, cp); //, FREE_STYLE.COMMENCE);
+      draw = compuMove === -2 ? true : false;
     }
-    console.log("Proposed Moved :: ", compuMove);
+    // console.log("Proposed Moved :: ", compuMove);
   }
-
   return [win, draw, compuMove]; // will be returning a double tuple of winState, drawState, nextComputerPlay
 };
 
@@ -331,6 +340,8 @@ const gameReducers = (state = initialState, action) => {
           boardSlots: newState.boardSlots,
           currentPlayer: newState.currentPlayer,
           move: newState.nextMove,
+          gameOver: newState.gameOver,
+          drawGame: newState.drawGame,
         };
       }
       return state;
