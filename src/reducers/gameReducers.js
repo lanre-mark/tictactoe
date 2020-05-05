@@ -30,13 +30,6 @@ const gameReducers = (state = initialState, action) => {
           newState.computerDenote,
           newState.computerDenote === "x" ? "o" : "x"
         );
-        // if (this.winnerOnBoard(newState.boardSlots)) {
-        //   newState.gameOver = true;
-        // }
-        // if (this.noWinnerState(newState.boardSlots)) {
-        //   newState.drawGame = true;
-        // }
-
         return {
           ...state,
           boardSlots: newState.boardSlots,
@@ -82,12 +75,19 @@ const gameReducers = (state = initialState, action) => {
         newState.boardSlots = [...state.boardSlots];
         newState.boardSlots[newState.move] = newState.currentPlayer;
         newState.currentPlayer = newState.currentPlayer === "x" ? "o" : "x";
-
+        // check if there is a winner
+        [newState.gameOver, newState.drawGame] = winnerOnBoard(
+          newState.boardSlots,
+          newState.computerDenote,
+          newState.computerDenote
+        );
         return {
           ...state,
           boardSlots: newState.boardSlots,
           currentPlayer: newState.currentPlayer,
           move: -1,
+          gameOver: newState.gameOver,
+          drawGame: newState.drawGame,
         };
       }
       return state;

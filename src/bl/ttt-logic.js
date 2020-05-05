@@ -121,7 +121,7 @@ const unplayedSlotsOnly = (rndDirection) => {
 const freeStyleMove = (state) => {
   //, type
   let availDirection,
-    trials = 1;
+    trials = [];
   // if (type === FREE_STYLE.COMMENCE) {
   // means we're only in the empty directions
 
@@ -137,14 +137,15 @@ const freeStyleMove = (state) => {
       );
     }, //computer plays with user plays
     2: (currState) => {
+      // console.log("currState", currState);
       return currState.filter((inDirection) => inDirection.pls === 0);
     }, //no user nor compuer plays
   };
 
-  while (trials <= Object.keys(freeSyles).length) {
-    availDirection = freeSyles[randomizeType(Object.keys(freeSyles).length)](
-      state.slice()
-    );
+  while (trials.length <= Object.keys(freeSyles).length) {
+    const frT = randomizeType(Object.keys(freeSyles).length);
+    availDirection = freeSyles[frT](state.slice());
+    // console.log("freeStyles :: ", availDirection);
     if (availDirection.length > 0) {
       const randomDirection = randomizeType(availDirection.length);
       const whtWe = unPlayedPositionToindex(
@@ -152,11 +153,12 @@ const freeStyleMove = (state) => {
         unplayedSlotsOnly(availDirection[randomDirection].plays),
         availDirection[randomDirection].pos
       );
+      // console.log(whtWe);
       if (whtWe >= 0) {
         return whtWe;
       }
     }
-    trials++;
+    !trials.includes(frT) ? trials.push(frT) : null;
   }
   return -2;
 };
@@ -260,8 +262,11 @@ const winnerOnBoard = (strucData, cp, up) => {
   const compuBoard = [...newDirections].sort((a, b) => b.cp - a.cp);
   // console.log("Sorted by Computer Board :: ", compuBoard);
 
+  console.log("Current Player :: ", up);
+  console.log("Computer Denotion ::", cp);
+
   let compuMove = -1;
-  if (!win && !draw) {
+  if (!win && !draw && up !== cp) {
     // if (
     //   userBoard[0].up === userBoard[1].up &&
     //   userBoard[0].up >= Math.ceil(boardUnit / 2)
