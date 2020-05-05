@@ -115,54 +115,86 @@ const unplayedSlotsOnly = (rndDirection) => {
 /**
  *
  * @param {Array/Collection} state Current state of tic-tac-toe directions
- * @param {String} cp computer play denotion
+ * NOT USED ANYMORE @param {String} cp computer play denotion
  *  NOT USED @param {Enum/Constant} type  A constant to indicate the type of FreeStyle computation.
  */
-const freeStyleMove = (state, cp) => {
+const freeStyleMove = (state) => {
   //, type
-  let availDirection;
+  let availDirection,
+    trials = 1;
   // if (type === FREE_STYLE.COMMENCE) {
   // means we're only in the empty directions
-  availDirection = state.reduce((availDirections, currentDirection) => {
-    // give priority firs tto previously started moves/directions of the computer
-    if (currentDirection.plays.every((position) => position === cp)) {
-      availDirections.push(currentDirection);
-    }
-    return availDirections;
-  }, []);
-  if (availDirection.length === 0) {
-    // if there is/are no directions in play solely by the computer, then
-    // consider the empty postions as well
-    availDirection = state.reduce((availDirections, currentDirection) => {
-      if (currentDirection.plays.every((position) => !position)) {
-        availDirections.push(currentDirection);
+
+  const freeSyles = {
+    0: (currState) => {
+      return currState.filter(
+        (inDirection) => inDirection.cp > 0 && inDirection.up === 0
+      );
+    }, //computer plays without user plays
+    1: (currState) => {
+      return currState.filter(
+        (inDirection) => inDirection.cp > 0 && inDirection.up === 0
+      );
+    }, //computer plays with user plays
+    2: (currState) => {
+      return currState.filter((inDirection) => inDirection.pls === 0);
+    }, //no user nor compuer plays
+  };
+
+  while (trials <= 3) {
+    availDirection = freeSyles[randomizeType(Object.keys(freeSyles).length)](
+      state.slice()
+    );
+    if (availDirection.length > 0) {
+      const randomDirection = randomizeType(availDirection.length);
+      const whtWe = unPlayedPositionToindex(
+        availDirection[randomDirection].plays.length,
+        unplayedSlotsOnly(availDirection[randomDirection].plays),
+        availDirection[randomDirection].pos
+      );
+      if (whtWe >= 0) {
+        return whtWe;
       }
-      return availDirections;
-    }, []);
+    }
+    trials++;
   }
-  // console.log("Available Directions from freeStyle :: ", availDirection);
+
+  // availDirection = state.reduce((availDirections, currentDirection) => {
+  //   if (currentDirection.plays.every((position) => position === cp)) {
+  //     availDirections.push(currentDirection);
+  //   }
+  //   return availDirections;
+  // }, []);
+  // if (availDirection.length === 0) {
+  //   availDirection = state.reduce((availDirections, currentDirection) => {
+  //     if (currentDirection.plays.every((position) => !position)) {
+  //       availDirections.push(currentDirection);
+  //     }
+  //     return availDirections;
+  //   }, []);
+  // }
   // } else if (type === FREE_STYLE.INTERMEDIATE) {
   //   // means we want to take the entire board and fill using the player i.e. computeDenote
   //   // however, we fill from the least available to the most available
   // }
-  if (availDirection.length > 0) {
-    const randomDirection = randomizeType(availDirection.length);
-    // console.log(
-    //   "availDirection[randomDirection].plays",
-    //   availDirection[randomDirection].plays
-    // );
 
-    // console.log("availDirections :: ", availDirection);
-    // console.log("random direction  :: ", availDirection[randomDirection]);
+  // if (availDirection.length > 0) {
+  //   const randomDirection = randomizeType(availDirection.length);
+  //   // console.log(
+  //   //   "availDirection[randomDirection].plays",
+  //   //   availDirection[randomDirection].plays
+  //   // );
+  //   // console.log(randomizeType(state[randomDirection].plays.length));
+  //   // const shuffled = shuffle(availDirection[randomDirection].plays);
+  //   // console.log(shuffled);
+  //   // console.log(unplayedSlotsOnly(shuffled));
+  //   // console.log(randomizeType(shuffle(state[randomDirection].plays).length));
 
-    return unPlayedPositionToindex(
-      availDirection[randomDirection].plays.length,
-      unplayedSlotsOnly(availDirection[randomDirection].plays),
-      availDirection[randomDirection].pos
-    );
-  }
-  // else {
-  //   return -2;
+  //   return unPlayedPositionToindex(
+  //     availDirection[randomDirection].plays.length,
+  //     unplayedSlotsOnly(availDirection[randomDirection].plays),
+  //     availDirection[randomDirection].pos
+  //   );
   // }
   return -2;
 };
@@ -289,10 +321,10 @@ const winnerOnBoard = (strucData, cp, up) => {
       // do a freestyle for the User but using the most accomplished direction
       // use the already sorted
       // console.log("Proceding with freeStyleMove");
-      compuMove = freeStyleMove(newDirections, cp); //, FREE_STYLE.COMMENCE);
+      compuMove = freeStyleMove(newDirections); //, FREE_STYLE.COMMENCE);
       draw = compuMove === -2 ? true : false;
     }
-    console.log("Proposed Moved :: ", compuMove);
+    // console.log("Proposed Moved :: ", compuMove);
   }
   return [win, draw, compuMove]; // will be returning a double tuple of winState, drawState, nextComputerPlay
 };
