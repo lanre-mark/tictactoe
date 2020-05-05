@@ -256,10 +256,9 @@ const winnerOnBoard = (strucData, cp, up) => {
       pls: arr.cp + arr.up, // total numbers of plays
       pos: indexToCodify(ndx, boardUnit),
     }))
-    .filter((rr) => rr.pls < 5);
+    .filter((rr) => rr.pls < boardUnit);
 
   // console.log("here is the direction pattern :: ", newDirections);
-  // Also remove any direction that has completed its plays using the filter
   const userBoard = [...newDirections].sort((a, b) => b.up - a.up);
   // console.log("Sorted by User Board :: ", userBoard);
   const compuBoard = [...newDirections].sort((a, b) => b.cp - a.cp);
