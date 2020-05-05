@@ -282,38 +282,26 @@ const winnerOnBoard = (strucData, cp, up) => {
       // use the already sorted
       compuMove = freeStyleMove(newDirections, cp); //, FREE_STYLE.COMMENCE);
     }
-    // console.log(compuMove);
+    console.log("Proposed Moved :: ", compuMove);
   }
 
   return [win, draw, compuMove]; // will be returning a double tuple of winState, drawState, nextComputerPlay
 };
 
 const gameReducers = (state = initialState, action) => {
-  // if (action.type === types.TICK_BOARD) {
-  //   return state;
-  // }
-  // if (action.type === types.SELECT_BOARD_SIZE) {
-  //   console.log("selected size of board");
-  //   // return a brand new state
-  //   return {
-  //     ...state,
-  //     gameOver: false,
-  //     drawGame: false,
-  //     currentPlayer: "x",
-  //     boardSlots: [...Array(action.payload ** 2).keys()].map((d) => null),
-  //     size: action.payload,
-  //   };
-  // }
-  // return state;
+  const newState = state;
   switch (action.type) {
     case types.TICK_BOARD:
       // console.log("Board was ticked/played");
-      const newState = state;
       if (!newState.gameOver && !newState.drawGame) {
         newState.boardSlots = [...state.boardSlots];
         newState.boardSlots[action.payload] = newState.currentPlayer;
         newState.currentPlayer = newState.currentPlayer === "x" ? "o" : "x";
-        [newState.gameOver, newState.drawGame] = winnerOnBoard(
+        [
+          newState.gameOver,
+          newState.drawGame,
+          newState.nextMove,
+        ] = winnerOnBoard(
           newState.boardSlots,
           newState.computerDenote,
           newState.computerDenote === "x" ? "o" : "x"
@@ -324,12 +312,15 @@ const gameReducers = (state = initialState, action) => {
         // if (this.noWinnerState(newState.boardSlots)) {
         //   newState.drawGame = true;
         // }
+
+        return {
+          ...state,
+          boardSlots: newState.boardSlots,
+          currentPlayer: newState.currentPlayer,
+          move: newState.nextMove,
+        };
       }
-      return {
-        ...state,
-        boardSlots: newState.boardSlots,
-        currentPlayer: newState.currentPlayer,
-      };
+      return state;
     case types.SELECT_BOARD_SIZE:
       // console.log("selected size of board");
       // return a brand new state
@@ -361,6 +352,18 @@ const gameReducers = (state = initialState, action) => {
     case types.GAME_DRAW_STATE:
       return state;
     case types.GENERATE_TICK:
+      if (!newState.gameOver && !newState.drawGame && newState.move > -1) {
+        newState.boardSlots = [...state.boardSlots];
+        newState.boardSlots[newState.move] = newState.currentPlayer;
+        newState.currentPlayer = newState.currentPlayer === "x" ? "o" : "x";
+
+        return {
+          ...state,
+          boardSlots: newState.boardSlots,
+          currentPlayer: newState.currentPlayer,
+          move: -1,
+        };
+      }
       return state;
     default:
       return state;
