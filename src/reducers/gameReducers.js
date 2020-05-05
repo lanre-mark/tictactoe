@@ -70,6 +70,8 @@ const unPlayedPositionToindex = (boardSize, identifiedSpot, directionCode) => {
 const spoilerMove = (directRow) => {
   for (let ii = 0; ii < directRow.plays.length; ii++) {
     if (!directRow.plays[ii]) {
+      console.log("Location to Spoil ::", ii);
+      console.log(directRow);
       return unPlayedPositionToindex(directRow.plays.length, ii, directRow.pos);
     }
   }
@@ -112,7 +114,7 @@ const unplayedSlotsOnly = (rndDirection) => {
   while (1) {
     // 1 returns truthy
     randomIndexFromDirection = randomizeType(rndDirection.length);
-    console.log(rndDirection[randomIndexFromDirection]);
+
     if (!rndDirection[randomIndexFromDirection]) {
       break;
     }
@@ -142,7 +144,7 @@ const freeStyleMove = (state, cp) => {
     }
     return availDirections;
   }, []);
-  console.log("Available Directions from freeStyle :: ", availDirection);
+  // console.log("Available Directions from freeStyle :: ", availDirection);
   // } else if (type === FREE_STYLE.INTERMEDIATE) {
   //   // means we want to take the entire board and fill using the player i.e. computeDenote
   //   // however, we fill from the least available to the most available
@@ -153,11 +155,6 @@ const freeStyleMove = (state, cp) => {
     //   "availDirection[randomDirection].plays",
     //   availDirection[randomDirection].plays
     // );
-    // console.log(randomizeType(state[randomDirection].plays.length));
-    // const shuffled = shuffle(availDirection[randomDirection].plays);
-    // console.log(shuffled);
-    // console.log(unplayedSlotsOnly(shuffled));
-    // console.log(randomizeType(shuffle(state[randomDirection].plays).length));
 
     return unPlayedPositionToindex(
       availDirection[randomDirection].plays.length,
@@ -252,13 +249,17 @@ const winnerOnBoard = (strucData, cp, up) => {
   // need to make sure other player is not about to win
 
   // boardUnit is the number of plays required ina  direction
-  const newDirections = objDirections.map((arr, ndx) => ({
-    ...arr,
-    pls: 0, // total numbers of plays
-    pos: indexToCodify(ndx, boardUnit),
-  }));
-  // console.log("here is the direction pattern :: ", newDirections);
+  // Also remove any direction that has completed its plays using the filter
+  const newDirections = objDirections
+    .map((arr, ndx) => ({
+      ...arr,
+      pls: arr.cp + arr.up, // total numbers of plays
+      pos: indexToCodify(ndx, boardUnit),
+    }))
+    .filter((rr) => rr.pls < 5);
 
+  // console.log("here is the direction pattern :: ", newDirections);
+  // Also remove any direction that has completed its plays using the filter
   const userBoard = [...newDirections].sort((a, b) => b.up - a.up);
   // console.log("Sorted by User Board :: ", userBoard);
   const compuBoard = [...newDirections].sort((a, b) => b.cp - a.cp);
@@ -275,16 +276,18 @@ const winnerOnBoard = (strucData, cp, up) => {
       //i.e. user requires only one step for COMP to WIN
       // then be defensive
       console.log("Proceding with spoilerMove for defense");
-      compuMove = spoilerMove(compuBoard[0]);
-    } else if (userBoard[0].up === boardUnit - 1) {
+      console.log("userBoard :: ", userBoard);
+      console.log("userBoard[0]  :: ", userBoard[0]);
+      compuMove = spoilerMove(userBoard[0]);
+    } else if (compuBoard[0].up === boardUnit - 1) {
       //i.e. user requires only one step for USER to WIN
       // then be defensive
       console.log("Proceding with spoilerMove for checkout");
-      compuMove = spoilerMove(userBoard[0]);
+      compuMove = spoilerMove(compuBoard[0]);
     } else {
       // do a freestyle for the User but using the most accomplished direction
       // use the already sorted
-      console.log("Proceding with freeStyleMove");
+      // console.log("Proceding with freeStyleMove");
       compuMove = freeStyleMove(newDirections, cp); //, FREE_STYLE.COMMENCE);
     }
     console.log("Proposed Moved :: ", compuMove);
