@@ -156,13 +156,19 @@ const freeStyleMove = (state, cp) => {
     //   availDirection[randomDirection].plays
     // );
 
+    // console.log("availDirections :: ", availDirection);
+    // console.log("random direction  :: ", availDirection[randomDirection]);
+
     return unPlayedPositionToindex(
       availDirection[randomDirection].plays.length,
       unplayedSlotsOnly(availDirection[randomDirection].plays),
       availDirection[randomDirection].pos
     );
   }
-  return -1;
+  // else {
+  //   return -2;
+  // }
+  return -2;
 };
 
 /**
@@ -274,9 +280,9 @@ const winnerOnBoard = (strucData, cp, up) => {
     if (userBoard[0].up === boardUnit - 1) {
       //i.e. user requires only one step for COMP to WIN
       // then be defensive
-      console.log("Proceding with spoilerMove for defense");
-      console.log("userBoard :: ", userBoard);
-      console.log("userBoard[0]  :: ", userBoard[0]);
+      // console.log("Proceding with spoilerMove for defense");
+      // console.log("userBoard :: ", userBoard);
+      // console.log("userBoard[0]  :: ", userBoard[0]);
       compuMove = spoilerMove(userBoard[0]);
     } else if (compuBoard[0].up === boardUnit - 1) {
       //i.e. user requires only one step for USER to WIN
