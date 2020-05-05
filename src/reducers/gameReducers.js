@@ -30,6 +30,20 @@ const gameReducers = (state = initialState, action) => {
           newState.computerDenote,
           newState.computerDenote === "x" ? "o" : "x"
         );
+        if (newState.nextMove === -2) {
+          // then there is no alternative approach to move
+          console.log("no more available spots to play");
+          newState.drawGame = true;
+        }
+        if (newState.gameOver) {
+          console.log(
+            newState.currentPlayer === "x" ? "o" : "x",
+            " just won the game"
+          );
+        }
+        if (newState.drawGame) {
+          console.log("There is a draw");
+        }
         return {
           ...state,
           boardSlots: newState.boardSlots,
@@ -81,6 +95,17 @@ const gameReducers = (state = initialState, action) => {
           newState.computerDenote,
           newState.computerDenote
         );
+        // if (newState.nextMove === -2) {
+        //   // then there is no alternative approach to move
+        //   console.log("no more available spots to play");
+        //   newState.drawGame = true;
+        // }
+        if (newState.gameOver) {
+          console.log(newState.computerDenote, " just won the game");
+        }
+        if (newState.drawGame) {
+          console.log("There is a draw");
+        }
         return {
           ...state,
           boardSlots: newState.boardSlots,

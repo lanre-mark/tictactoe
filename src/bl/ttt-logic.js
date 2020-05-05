@@ -121,7 +121,8 @@ const unplayedSlotsOnly = (rndDirection) => {
 const freeStyleMove = (state) => {
   //, type
   let availDirection,
-    trials = [];
+    trials = [],
+    compensateMove = false;
   // if (type === FREE_STYLE.COMMENCE) {
   // means we're only in the empty directions
 
@@ -133,7 +134,11 @@ const freeStyleMove = (state) => {
     }, //computer plays without user plays
     1: (currState) => {
       return currState.filter(
-        (inDirection) => inDirection.cp > 0 && inDirection.up === 0
+        // (inDirection) => inDirection.cp > 0 && inDirection.up > 0
+        (inDirection) =>
+          inDirection.cp > 0 &&
+          inDirection.up > 0 &&
+          inDirection.cp > inDirection.up
       );
     }, //computer plays with user plays
     2: (currState) => {
@@ -142,10 +147,26 @@ const freeStyleMove = (state) => {
     }, //no user nor compuer plays
   };
 
+  const compensateSyles = {
+    0: (currState) => {
+      return currState.filter(
+        (inDirection) => inDirection.pls < inDirection.plays.length
+      ); // just play anywhere to avoid endless loop
+    },
+  };
+
   while (trials.length <= Object.keys(freeSyles).length) {
-    const frT = randomizeType(Object.keys(freeSyles).length);
-    availDirection = freeSyles[frT](state.slice());
-    // console.log("freeStyles :: ", availDirection);
+    let frT;
+    if (trials.length < Object.keys(freeSyles).length) {
+      frT = randomizeType(Object.keys(freeSyles).length);
+      availDirection = freeSyles[frT](state.slice());
+    } else {
+      frT = 0;
+      compensateMove = true;
+      availDirection = compensateSyles[frT](state.slice());
+      console.log("Compensate move activated");
+    }
+    console.log("freeStyles :: ", availDirection);
     if (availDirection.length > 0) {
       const randomDirection = randomizeType(availDirection.length);
       const whtWe = unPlayedPositionToindex(
@@ -158,8 +179,18 @@ const freeStyleMove = (state) => {
         return whtWe;
       }
     }
+    // console.log("Adding " + frT + " to ", trials);
+    if (compensateMove) {
+      console.log("Compensate move unsuccessful");
+      // means we have moved from compensateStyles cos there is no more available
+      // slots on the board to play using the computer's character
+      // hence we've had to play anywhere on the board
+      // but now there is no space even with playing just any position/slot
+      return -2;
+    }
     !trials.includes(frT) ? trials.push(frT) : null;
   }
+  console.log("Returning back with nothing");
   return -2;
 };
 
@@ -240,7 +271,10 @@ const winnerOnBoard = (strucData, cp, up) => {
   if (!win) {
     // if there is no winner yet
     // check if there is a draw
-    draw = !strucData.includes(null);
+    draw =
+      !strucData.includes(null) ||
+      allDirections.filter((mv) => mv.cp > 0 && mv.up > 0).length ===
+        allDirections.length;
   }
   // performing algorithm for computer's next play
   // all directions are in allDirections
@@ -261,9 +295,6 @@ const winnerOnBoard = (strucData, cp, up) => {
   // console.log("Sorted by User Board :: ", userBoard);
   const compuBoard = [...newDirections].sort((a, b) => b.cp - a.cp);
   // console.log("Sorted by Computer Board :: ", compuBoard);
-
-  console.log("Current Player :: ", up);
-  console.log("Computer Denotion ::", cp);
 
   let compuMove = -1;
   if (!win && !draw && up !== cp) {
@@ -292,6 +323,8 @@ const winnerOnBoard = (strucData, cp, up) => {
       draw = compuMove === -2 ? true : false;
     }
     console.log("Proposed Moved :: ", compuMove);
+  } else {
+    console.log("No proposed move");
   }
   return [win, draw, compuMove]; // will be returning a double tuple of winState, drawState, nextComputerPlay
 };
