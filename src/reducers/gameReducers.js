@@ -112,6 +112,7 @@ const unplayedSlotsOnly = (rndDirection) => {
   while (1) {
     // 1 returns truthy
     randomIndexFromDirection = randomizeType(rndDirection.length);
+    console.log(rndDirection[randomIndexFromDirection]);
     if (!rndDirection[randomIndexFromDirection]) {
       break;
     }
@@ -141,6 +142,7 @@ const freeStyleMove = (state, cp) => {
     }
     return availDirections;
   }, []);
+  console.log("Available Directions from freeStyle :: ", availDirection);
   // } else if (type === FREE_STYLE.INTERMEDIATE) {
   //   // means we want to take the entire board and fill using the player i.e. computeDenote
   //   // however, we fill from the least available to the most available
@@ -159,7 +161,7 @@ const freeStyleMove = (state, cp) => {
 
     return unPlayedPositionToindex(
       availDirection[randomDirection].plays.length,
-      unplayedSlotsOnly(shuffle(availDirection[randomDirection].plays)),
+      unplayedSlotsOnly(availDirection[randomDirection].plays),
       availDirection[randomDirection].pos
     );
   }
@@ -272,14 +274,17 @@ const winnerOnBoard = (strucData, cp, up) => {
     if (userBoard[0].up === boardUnit - 1) {
       //i.e. user requires only one step for COMP to WIN
       // then be defensive
+      console.log("Proceding with spoilerMove for defense");
       compuMove = spoilerMove(compuBoard[0]);
     } else if (userBoard[0].up === boardUnit - 1) {
       //i.e. user requires only one step for USER to WIN
       // then be defensive
+      console.log("Proceding with spoilerMove for checkout");
       compuMove = spoilerMove(userBoard[0]);
     } else {
       // do a freestyle for the User but using the most accomplished direction
       // use the already sorted
+      console.log("Proceding with freeStyleMove");
       compuMove = freeStyleMove(newDirections, cp); //, FREE_STYLE.COMMENCE);
     }
     console.log("Proposed Moved :: ", compuMove);
