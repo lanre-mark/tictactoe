@@ -1,33 +1,32 @@
+const webpack = require("webpack");
 const path = require("path");
-const HtmlWebPackPlugin = require("html-webpack-plugin");
-const CopyPlugin = require("copy-webpack-plugin");
+
+const entry = ["./src/index.js"];
+
+const output = {
+  path: path.resolve(__dirname, "dist"),
+  publicPath: "/dist/",
+  filename: "bundle.js",
+};
 
 module.exports = {
-  mode: "development",
-  entry: "./src/app.jsx",
-  output: {
-    path: path.resolve(__dirname, "dist"),
-    filename: "bundle.js",
-  },
+  entry,
+  output,
+  devtool: "eval-source-map",
   module: {
-    rules: [
+    loaders: [
       {
-        test: /\.(js|jsx)$/,
+        test: /.(js|jsx)$/,
         exclude: /node_modules/,
-        use: ["babel-loader"],
+        loader: "babel-loader",
+        query: {
+          presets: ["es2015", "react", "stage-2"],
+        },
       },
     ],
   },
-  plugins: [
-    new HtmlWebPackPlugin({
-      template: "./src/index.html",
-      filename: "./index.html",
-    }),
-    new CopyPlugin([{ from: "./src/style.css" }]),
-  ],
   devServer: {
-    contentBase: "./dist",
+    contentBase: "./",
     port: 4500,
   },
-  devtool: "eval-source-map",
 };

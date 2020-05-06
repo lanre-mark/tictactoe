@@ -1,3 +1,11 @@
+:root {
+  --proportion: 20%;
+}
+
+/**
+https://codepen.io/MarioD/pen/ExVZBjx   Player Simulation
+https://codepen.io/MarioD/pen/VwvLJOP   Swap Button
+*/
 /* ------------- */
 /* Global Styles */
 /* ------------- */
@@ -19,9 +27,11 @@ body {
 }
 
 .game {
-  width: 600px;
-  height: 600px;
+  width: 800px;
+  height: 700px;
   position: relative;
+  display: flex;
+  flex-direction: column-reverse;
 }
 
 /* ---------- */
@@ -29,8 +39,8 @@ body {
 /* ---------- */
 
 .game-board {
-  width: 100%;
-  height: 100%;
+  width: 95%;
+  height: 95%;
   position: absolute;
   top: 0;
   left: 0;
@@ -43,8 +53,8 @@ body {
 }
 
 .game-board__button {
-  width: 20%; /*33%;*/
-  height: 20%; /*33%;*/
+  width: var(--proportion); /*33%;*/
+  height: var(--proportion); /*33%;*/
   background: transparent;
   padding: 0;
   border: 5px solid #25166c;
@@ -133,4 +143,102 @@ body {
 }
 .x--enter-done .x__line-2 {
   stroke-dashoffset: 0;
+}
+
+.keys {
+  width: 800px;
+  display: block;
+  margin: 35vh auto;
+}
+
+.key__button {
+  box-sizing: border-box;
+  line-height: 80px;
+  font-size: 22px;
+  text-align: center;
+  width: 80px;
+  color: #555;
+  cursor: pointer;
+  margin: 0 8px;
+  height: 80px;
+  border-color: #f2f2f2;
+  border-style: solid;
+  text-shadow: 0 0.5px 1px #777, 0 2px 6px #f2f2f2;
+  border-width: 1px;
+  border-radius: 10px;
+  background: -webkit-linear-gradient(
+    top,
+    #f9f9f9 0%,
+    #d2d2d2 80%,
+    #c0c0c0 100%
+  );
+  font-family: sans-serif;
+  display: inline-block;
+  transition: box-shadow 0.3s ease, transform 0.15s ease;
+  box-shadow: 0 0 1px #888, 0 1px 0 #fff, 0 6px 0 #c0c0c0,
+    0 8px 17px rgba(#444, 0.4), 2px 1px 4px rgba(#444, 0.25),
+    -2px 1px 4px rgba(#444, 0.25), 0 9px 16px rgba(#444, 0.1);
+}
+
+.key__button:hover,
+.key__button:focus {
+  box-shadow: 0 0 1px #888, 0 1px 0 #fff, 0 4px 0 #c0c0c0,
+    0 2px 35px rgba(#444, 0.3), 2px 2px 4px rgba(#444, 0.25),
+    -2px 2px 4px rgba(#444, 0.25), 0 7px 4px rgba(#444, 0.1);
+  transform: translateY(2px);
+}
+
+.key__button:active {
+  box-shadow: 0 0 1px #888, 0 1px 0 #fff, 0 0 0 #c0c0c0,
+    0 0px 30px rgba(#444, 0.15), 2px 2px 4px rgba(#444, 0.25),
+    -2px 2px 4px rgba(#444, 0.25), 0 0px 4px rgba(#444, 0.25);
+  transform: translateY(4px);
+}
+
+.game-actions {
+  height: 5%;
+  width: 95%;
+  display: flex;
+  font-family: monospace;
+  justify-content: space-between;
+  margin-top: 3px;
+  padding-top: 7px;
+}
+
+.action__message {
+  width: 60%;
+  padding: 5px 0px 0px 10px;
+  font-size: 18px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 5px 5px #000;
+  border: none;
+}
+
+.action__session {
+  width: 20%;
+  color: #25166c;
+  font-size: 16px;
+  font-weight: bold;
+  background: transparent;
+  transition: background 200ms linear;
+  text-align: center;
+  border: 1px solid #000;
+  border-radius: 5px;
+  box-shadow: 5px 5px #000;
+  cursor: pointer;
+}
+
+.action__end {
+  width: 15%;
+  color: #25166c;
+  font-size: 16px;
+  font-weight: bold;
+  background: transparent;
+  transition: background 200ms linear;
+  border: 1px solid #01023a;
+  text-align: center;
+  border-radius: 5px;
+  box-shadow: 5px 5px #01023a;
+  cursor: pointer;
 }
