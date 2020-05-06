@@ -3,7 +3,7 @@ import React from "react";
 const BoardActions = (props) => {
   return (
     <div className="game-actions">
-      <div className="action__message">No more dircetions to play</div>
+      <div className="action__message">{props.gameActionDisplay}</div>
       <div
         className="action__session"
         onClick={(e) => {

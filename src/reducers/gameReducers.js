@@ -12,6 +12,7 @@ const initialState = {
   move: -1,
   userCharacter: "x",
   saveState: false,
+  description: "",
 };
 
 const gameReducers = (state = initialState, action) => {

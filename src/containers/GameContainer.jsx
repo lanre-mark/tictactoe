@@ -71,6 +71,7 @@ class GameContainer extends Component {
         <BoardActions
           onCancelGame={this.props.cancelGame}
           onRestartSession={this.props.restartSession}
+          gameActionDisplay={this.props.gameSessionActivity}
         />
       </div>
     );
