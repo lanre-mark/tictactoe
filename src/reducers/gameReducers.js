@@ -119,6 +119,23 @@ const gameReducers = (state = initialState, action) => {
         };
       }
       return state;
+    case types.CANCEL_GAME:
+      // cancel the game and return to MainContainer
+      // clear game board and all others but retain
+      //                                     computerDenote, userCharacter, currentPlayer & saveState
+      return {
+        ...initialState,
+        currentPlayer: state.userCharacter,
+        computerDenote: state.computerDenote,
+        userCharacter: state.userCharacter,
+        saveState: state.saveState,
+      };
+    case types.RESTART_SESSION:
+      return state;
+    case types.CHANGE_USER_CHARACTER:
+      return state;
+    case types.CHANGE_SESSION_PRESERVATION:
+      return state;
     default:
       return state;
   }

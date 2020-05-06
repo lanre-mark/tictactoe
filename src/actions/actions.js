@@ -31,3 +31,23 @@ export const generateMove = () => {
     payload: 0,
   };
 };
+
+export const cancelGame = () => ({
+  type: types.CANCEL_GAME,
+  payload: true,
+});
+
+export const restartGameSession = () => ({
+  type: types.RESTART_SESSION,
+  payload: true,
+});
+
+export const changeUserCharacter = (chr) => ({
+  type: types.CHANGE_USER_CHARACTER,
+  payload: chr,
+});
+
+export const changePreservation = (status) => ({
+  type: types.CHANGE_SESSION_PRESERVATION,
+  payload: status,
+});
