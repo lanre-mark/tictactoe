@@ -166,7 +166,7 @@ const freeStyleMove = (state) => {
       availDirection = compensateSyles[frT](state.slice());
       console.log("Compensate move activated");
     }
-    console.log("freeStyles :: ", availDirection);
+    // console.log("freeStyles :: ", availDirection);
     if (availDirection.length > 0) {
       const randomDirection = randomizeType(availDirection.length);
       const whtWe = unPlayedPositionToindex(
@@ -200,7 +200,7 @@ const freeStyleMove = (state) => {
  * @param {*} cp :: computer player denotion
  * @param {*} up :: user player denotion
  */
-const winnerOnBoard = (strucData, cp, up) => {
+const winnerOnBoard = (strucData, cp, up, simulate = false) => {
   const currentBoard = [];
   let allDirections = [],
     objDirections = [],
@@ -268,14 +268,7 @@ const winnerOnBoard = (strucData, cp, up) => {
     });
   });
   let draw = false;
-  if (!win) {
-    // if there is no winner yet
-    // check if there is a draw
-    draw =
-      !strucData.includes(null) ||
-      allDirections.filter((mv) => mv.cp > 0 && mv.up > 0).length ===
-        allDirections.length;
-  }
+
   // performing algorithm for computer's next play
   // all directions are in allDirections
   // need to make sure other player is not about to win
@@ -290,6 +283,22 @@ const winnerOnBoard = (strucData, cp, up) => {
     }))
     .filter((rr) => rr.pls < boardUnit);
 
+  if (!win) {
+    // if there is no winner yet
+    // check if there is a draw
+    console.log("Let's check for a draw");
+    console.log(newDirections);
+    console.log(
+      "Disqualified Directions ",
+      newDirections.filter((mv) => mv.cp > 0 && mv.up > 0).length
+    );
+    console.log("All available directions :: ", newDirections.length);
+    draw =
+      !strucData.includes(null) ||
+      newDirections.filter((mv) => mv.cp > 0 && mv.up > 0).length ===
+        newDirections.length;
+  }
+
   // console.log("here is the direction pattern :: ", newDirections);
   const userBoard = [...newDirections].sort((a, b) => b.up - a.up);
   // console.log("Sorted by User Board :: ", userBoard);
@@ -297,7 +306,7 @@ const winnerOnBoard = (strucData, cp, up) => {
   // console.log("Sorted by Computer Board :: ", compuBoard);
 
   let compuMove = -1;
-  if (!win && !draw && up !== cp) {
+  if (!win && !draw && !simulate) {
     // if (
     //   userBoard[0].up === userBoard[1].up &&
     //   userBoard[0].up >= Math.ceil(boardUnit / 2)

@@ -10,6 +10,8 @@ const initialState = {
   size: 0,
   boardDistribution: 100 + "%",
   move: -1,
+  userCharacter: "x",
+  saveState: false,
 };
 
 const gameReducers = (state = initialState, action) => {
@@ -93,7 +95,8 @@ const gameReducers = (state = initialState, action) => {
         [newState.gameOver, newState.drawGame] = winnerOnBoard(
           newState.boardSlots,
           newState.computerDenote,
-          newState.computerDenote
+          newState.computerDenote === "x" ? "o" : "x",
+          true
         );
         // if (newState.nextMove === -2) {
         //   // then there is no alternative approach to move

@@ -8,6 +8,8 @@ const mapStateToProps = (state) => {
   return {
     gameBoardSize: state.game.size,
     gameBoardRatio: state.game.boardDistribution,
+    gameCharacter: state.game.userCharacter,
+    gamePreservation: state.game.saveState,
   };
 };
 
