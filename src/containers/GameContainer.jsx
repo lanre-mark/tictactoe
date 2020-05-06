@@ -24,6 +24,12 @@ const mapDispatchToProps = (dispatch) => ({
   computeGame: () => {
     dispatch(playActions.generateMove());
   },
+  cancelGame: () => {
+    dispatch(playActions.cancelGame());
+  },
+  restartSession: () => {
+    dispatch(playActions.restartGameSession());
+  },
 });
 
 class GameContainer extends Component {
@@ -57,6 +63,8 @@ class GameContainer extends Component {
               computeSymbol={this.props.gameComputerDenote}
               playSymbol={this.props.gameSessionPlayer}
               onPlayGame={this.props.playGame}
+              onCancelGame={this.props.cancelGame}
+              onRestartSession={this.props.restartSession}
             />
           ))}
         </div>
