@@ -18,6 +18,12 @@ const mapDispatchToProps = (dispatch) => ({
   onBoardSizeSelection: (e, sz) => {
     dispatch(gameActions.selectBoardSize(sz));
   },
+  onUserCharacterChange: (e, newCharacter) => {
+    dispatch(gameActions.changeUserCharacter(newCharacter));
+  },
+  onPreservationChange: (e, preservationStatus) => [
+    dispatch(gameActions.changePreservation(preservationStatus)),
+  ],
 });
 
 class MainContainer extends Component {
@@ -41,4 +47,4 @@ class MainContainer extends Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(MainContainer); //mapDispatchToProps
+export default connect(mapStateToProps, mapDispatchToProps)(MainContainer);

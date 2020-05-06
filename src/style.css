@@ -2,6 +2,10 @@
   --proportion: 20%;
 }
 
+/**
+https://codepen.io/MarioD/pen/ExVZBjx   Player Simulation
+https://codepen.io/MarioD/pen/VwvLJOP   Swap Button
+*/
 /* ------------- */
 /* Global Styles */
 /* ------------- */
@@ -26,6 +30,8 @@ body {
   width: 800px;
   height: 700px;
   position: relative;
+  display: flex;
+  flex-direction: column-reverse;
 }
 
 /* ---------- */
@@ -33,8 +39,8 @@ body {
 /* ---------- */
 
 .game-board {
-  width: 100%;
-  height: 100%;
+  width: 95%;
+  height: 95%;
   position: absolute;
   top: 0;
   left: 0;
@@ -187,4 +193,52 @@ body {
     0 0px 30px rgba(#444, 0.15), 2px 2px 4px rgba(#444, 0.25),
     -2px 2px 4px rgba(#444, 0.25), 0 0px 4px rgba(#444, 0.25);
   transform: translateY(4px);
+}
+
+.game-actions {
+  height: 5%;
+  width: 95%;
+  display: flex;
+  font-family: monospace;
+  justify-content: space-between;
+  margin-top: 3px;
+  padding-top: 7px;
+}
+
+.action__message {
+  width: 60%;
+  padding: 5px 0px 0px 10px;
+  font-size: 18px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 5px 5px #000;
+  border: none;
+}
+
+.action__session {
+  width: 20%;
+  color: #25166c;
+  font-size: 16px;
+  font-weight: bold;
+  background: transparent;
+  transition: background 200ms linear;
+  text-align: center;
+  border: 1px solid #000;
+  border-radius: 5px;
+  box-shadow: 5px 5px #000;
+  cursor: pointer;
+}
+
+.action__end {
+  width: 15%;
+  color: #25166c;
+  font-size: 16px;
+  font-weight: bold;
+  background: transparent;
+  transition: background 200ms linear;
+  border: 1px solid #01023a;
+  text-align: center;
+  border-radius: 5px;
+  box-shadow: 5px 5px #01023a;
+  cursor: pointer;
 }

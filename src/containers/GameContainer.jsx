@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import GameBoard from "../components/GameBoard.jsx";
+import BoardActions from "../components/BoardActions.jsx";
 
 import * as playActions from "../actions/actions";
 
@@ -13,6 +14,7 @@ const mapStateToProps = (state) => {
     gameSessionState: state.game.boardSlots,
     gameComputerDenote: state.game.computerDenote,
     gameSessionMove: state.game.move,
+    gameSessionActivity: state.game.description,
   };
 };
 
@@ -63,11 +65,13 @@ class GameContainer extends Component {
               computeSymbol={this.props.gameComputerDenote}
               playSymbol={this.props.gameSessionPlayer}
               onPlayGame={this.props.playGame}
-              onCancelGame={this.props.cancelGame}
-              onRestartSession={this.props.restartSession}
             />
           ))}
         </div>
+        <BoardActions
+          onCancelGame={this.props.cancelGame}
+          onRestartSession={this.props.restartSession}
+        />
       </div>
     );
   }
