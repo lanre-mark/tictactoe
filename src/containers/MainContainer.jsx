@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import BoardChoice from "../components/BoardSize.jsx";
 import GameContainer from "./GameContainer.jsx";
+import GameSettings from "../components/GameSettings.jsx";
 import * as gameActions from "../actions/actions";
 
 const mapStateToProps = (state) => {
@@ -36,11 +37,11 @@ class MainContainer extends Component {
     return (
       <div>
         {this.props.gameBoardSize === 0 && (
-          <BoardChoice
-            gameBoardSize={this.props.gameBoardSize}
-            onSizeSelection={this.props.onBoardSizeSelection}
-          />
-        )}
+            <BoardChoice
+              gameBoardSize={this.props.gameBoardSize}
+              onSizeSelection={this.props.onBoardSizeSelection}
+            />
+          ) && <GameSettings {...this.props} />}
         {this.props.gameBoardSize > 0 && <GameContainer />}
       </div>
     );
