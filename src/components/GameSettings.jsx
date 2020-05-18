@@ -5,7 +5,7 @@ import PreserveSwitchIcon from "./SwitchIcon.jsx";
 
 const GameSettings = (props) => {
   return (
-    <div className="settings">
+    <div className="preserve__settings">
       <div className="player" onClick={props.onUserCharacterChange}>
         <div className="player__label">User Character</div>
         <SwitchTransition>

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Grid, Paper, Typography } from "@material-ui/core";
 import BoardChoice from "../components/BoardSize.jsx";
 import GameContainer from "./GameContainer.jsx";
 import GameSettings from "../components/GameSettings.jsx";
@@ -19,12 +20,14 @@ const mapDispatchToProps = (dispatch) => ({
   onBoardSizeSelection: (e, sz) => {
     dispatch(gameActions.selectBoardSize(sz));
   },
-  onUserCharacterChange: (e, newCharacter) => {
-    dispatch(gameActions.changeUserCharacter(newCharacter));
+  onUserCharacterChange: () => {
+    dispatch(gameActions.changeUserCharacter());
   },
-  onPreservationChange: (e, preservationStatus) => [
-    dispatch(gameActions.changePreservation(preservationStatus)),
-  ],
+  onPreservationChange: () => {
+    //e, preservationStatus
+    console.log("Click action on Preservation Change :: ");
+    dispatch(gameActions.changePreservation());
+  },
 });
 
 class MainContainer extends Component {
@@ -35,14 +38,23 @@ class MainContainer extends Component {
 
   render() {
     return (
-      <div>
-        {this.props.gameBoardSize === 0 && (
-            <BoardChoice
-              gameBoardSize={this.props.gameBoardSize}
-              onSizeSelection={this.props.onBoardSizeSelection}
-            />
-          ) && <GameSettings {...this.props} />}
-        {this.props.gameBoardSize > 0 && <GameContainer />}
+      <div
+        className={{
+          flexGrow: 1,
+        }}
+      >
+        <Grid container spacing={3}>
+          <Grid item xs={12}>
+            {this.props.gameBoardSize === 0 && <GameSettings {...this.props} />}
+            {this.props.gameBoardSize === 0 && (
+              <BoardChoice
+                gameBoardSize={this.props.gameBoardSize}
+                onSizeSelection={this.props.onBoardSizeSelection}
+              />
+            )}
+            {this.props.gameBoardSize > 0 && <GameContainer />}
+          </Grid>
+        </Grid>
       </div>
     );
   }
