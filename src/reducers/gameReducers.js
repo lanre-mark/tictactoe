@@ -16,14 +16,16 @@ const initialState = {
 };
 
 const gameReducers = (state = initialState, action) => {
-  const newState = state;
+  const newState = { ...state };
+  console.log("Action dispatched :: ", action.type);
   switch (action.type) {
     case types.TICK_BOARD:
-      // console.log("Board was ticked/played");
+      console.log("Board was ticked/played");
       if (!newState.gameOver && !newState.drawGame) {
         newState.boardSlots = [...state.boardSlots];
         newState.boardSlots[action.payload] = newState.currentPlayer;
         newState.currentPlayer = newState.currentPlayer === "x" ? "o" : "x";
+        console.log("WinOrLooseOnBoard");
         [
           newState.gameOver,
           newState.drawGame,
@@ -33,6 +35,7 @@ const gameReducers = (state = initialState, action) => {
           newState.computerDenote,
           newState.computerDenote === "x" ? "o" : "x"
         );
+        console.log("completed WinOrLooseOnBoard");
         if (newState.nextMove === -2) {
           // then there is no alternative approach to move
           console.log("no more available spots to play");
@@ -77,7 +80,7 @@ const gameReducers = (state = initialState, action) => {
         ...state,
         gameOver: false,
         drawGame: false,
-        currentPlayer: "x",
+        currentPlayer: state.userCharacter,
         boardSlots: [...Array(action.payload ** 2).keys()].map((d) => null),
         size: action.payload,
         boardDistribution: parseFloat(100 / action.payload).toFixed(4) + "%",
@@ -126,17 +129,23 @@ const gameReducers = (state = initialState, action) => {
       //                                     computerDenote, userCharacter, currentPlayer & saveState
       return {
         ...initialState,
-        currentPlayer: state.userCharacter,
+        currentPlayer: state.currentPlayer,
         computerDenote: state.computerDenote,
         userCharacter: state.userCharacter,
         saveState: state.saveState,
       };
+    // return state;
     case types.RESTART_SESSION:
       return state;
     case types.CHANGE_USER_CHARACTER:
-      return state;
+      newState.currentPlayer = state.userCharacter === "x" ? "o" : "x";
+      newState.userCharacter = state.userCharacter === "x" ? "o" : "x";
+      newState.computerDenote = newState.userCharacter === "x" ? "o" : "x";
+      console.log("User Character Change State : ", newState);
+      return newState;
     case types.CHANGE_SESSION_PRESERVATION:
-      return state;
+      newState.saveState = newState.saveState === true ? false : true;
+      return newState;
     default:
       return state;
   }
