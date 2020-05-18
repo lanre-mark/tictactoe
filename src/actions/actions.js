@@ -42,12 +42,10 @@ export const restartGameSession = () => ({
   payload: true,
 });
 
-export const changeUserCharacter = (chr) => ({
+export const changeUserCharacter = () => ({
   type: types.CHANGE_USER_CHARACTER,
-  payload: chr,
 });
 
-export const changePreservation = (status) => ({
+export const changePreservation = () => ({
   type: types.CHANGE_SESSION_PRESERVATION,
-  payload: status,
 });

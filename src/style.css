@@ -342,7 +342,7 @@ body {
 
 .preserve__label {
   display: flex;
-  justify-cotent: center;
+  justify-content: center;
   align-items: center;
   background: #f7f4ff;
   padding: 0 10px 0 20px;
@@ -417,4 +417,11 @@ body {
   stroke-miterlimit: 10;
   transition: stroke 0.2s;
   stroke-linecap: round;
+}
+
+.preserve__settings {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
 }
