@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Grid, Paper, Typography } from "@material-ui/core";
 import BoardChoice from "../components/BoardSize.jsx";
 import GameContainer from "./GameContainer.jsx";
 import GameSettings from "../components/GameSettings.jsx";
@@ -38,23 +37,15 @@ class MainContainer extends Component {
 
   render() {
     return (
-      <div
-        className={{
-          flexGrow: 1,
-        }}
-      >
-        <Grid container spacing={3}>
-          <Grid item xs={12}>
-            {this.props.gameBoardSize === 0 && <GameSettings {...this.props} />}
-            {this.props.gameBoardSize === 0 && (
-              <BoardChoice
-                gameBoardSize={this.props.gameBoardSize}
-                onSizeSelection={this.props.onBoardSizeSelection}
-              />
-            )}
-            {this.props.gameBoardSize > 0 && <GameContainer />}
-          </Grid>
-        </Grid>
+      <div>
+        {this.props.gameBoardSize === 0 && <GameSettings {...this.props} />}
+        {this.props.gameBoardSize === 0 && (
+          <BoardChoice
+            gameBoardSize={this.props.gameBoardSize}
+            onSizeSelection={this.props.onBoardSizeSelection}
+          />
+        )}
+        {this.props.gameBoardSize > 0 && <GameContainer />}
       </div>
     );
   }

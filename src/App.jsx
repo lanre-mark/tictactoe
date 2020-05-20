@@ -8,7 +8,7 @@ class App extends Component {
 
   render() {
     return (
-      <div>
+      <div className="game-layout">
         <MainContainer />
       </div>
     );

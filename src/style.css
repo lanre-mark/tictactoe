@@ -26,6 +26,12 @@ body {
   align-items: center;
 }
 
+.game-layout {
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: 1fr;
+}
+
 .game {
   width: 800px;
   height: 700px;
