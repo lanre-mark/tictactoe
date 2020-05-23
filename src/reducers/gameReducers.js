@@ -18,15 +18,13 @@ const initialState = {
 
 const gameReducers = (state = initialState, action) => {
   const newState = { ...state };
-  console.log("Action dispatched :: ", action.type);
+  let activityDesc = "";
   switch (action.type) {
     case types.TICK_BOARD:
-      console.log("Board was ticked/played");
       if (!newState.gameOver && !newState.drawGame) {
         newState.boardSlots = [...state.boardSlots];
         newState.boardSlots[action.payload] = newState.currentPlayer;
         newState.currentPlayer = newState.currentPlayer === "x" ? "o" : "x";
-        console.log("WinOrLooseOnBoard");
         [
           newState.gameOver,
           newState.drawGame,
@@ -36,20 +34,21 @@ const gameReducers = (state = initialState, action) => {
           newState.computerDenote,
           newState.computerDenote === "x" ? "o" : "x"
         );
-        console.log("completed WinOrLooseOnBoard");
+        activityDesc = `Playing now .... ${
+          state.currentPlayer === "x" ? "O" : "X"
+        }`;
         if (newState.nextMove === -2) {
-          // then there is no alternative approach to move
-          console.log("no more available spots to play");
+          activityDesc =
+            "There is no more winning spot to play, sorry it's a tie";
           newState.drawGame = true;
         }
         if (newState.gameOver) {
-          console.log(
-            newState.currentPlayer === "x" ? "o" : "x",
-            " just won the game"
-          );
+          activityDesc = `Player ${
+            newState.currentPlayer === "x" ? "O" : "X"
+          } has won the game.`;
         }
         if (newState.drawGame) {
-          console.log("There is a draw");
+          activityDesc = "The game is a tie.";
         }
         return {
           ...state,
@@ -58,6 +57,7 @@ const gameReducers = (state = initialState, action) => {
           move: newState.nextMove,
           gameOver: newState.gameOver,
           drawGame: newState.drawGame,
+          description: activityDesc,
         };
       }
       return state;
@@ -86,12 +86,14 @@ const gameReducers = (state = initialState, action) => {
         size: action.payload,
         boardDistribution: parseFloat(100 / action.payload).toFixed(4) + "%",
         computerDenote: state.currentPlayer === "x" ? "o" : "x",
+        description: `Playing now .... ${
+          state.currentPlayer === "x" ? "X" : "O"
+        }`,
       };
-    // case types.GAME_WINNER_STATE:
-    //   return state;
-    // case types.GAME_DRAW_STATE:
-    //   return state;
     case types.GENERATE_TICK:
+      activityDesc = `Playing now .... ${
+        newState.computerDenote === "x" ? "O" : "X"
+      }`;
       if (!newState.gameOver && !newState.drawGame && newState.move > -1) {
         newState.boardSlots = [...state.boardSlots];
         newState.boardSlots[newState.move] = newState.currentPlayer;
@@ -103,16 +105,17 @@ const gameReducers = (state = initialState, action) => {
           newState.computerDenote === "x" ? "o" : "x",
           true
         );
-        // if (newState.nextMove === -2) {
-        //   // then there is no alternative approach to move
-        //   console.log("no more available spots to play");
-        //   newState.drawGame = true;
-        // }
+
+        if (newState.nextMove === -2) {
+          activityDesc =
+            "There is no more winning spot to play, sorry its a tie";
+          newState.drawGame = true;
+        }
         if (newState.gameOver) {
-          console.log(newState.computerDenote, " just won the game");
+          activityDesc = `Player ${newState.computerDenote} has won the game.`;
         }
         if (newState.drawGame) {
-          console.log("There is a draw");
+          activityDesc = "The game is a tie.";
         }
         return {
           ...state,
@@ -121,13 +124,11 @@ const gameReducers = (state = initialState, action) => {
           move: -1,
           gameOver: newState.gameOver,
           drawGame: newState.drawGame,
+          description: activityDesc,
         };
       }
       return state;
     case types.CANCEL_GAME:
-      // cancel the game and return to MainContainer
-      // clear game board and all others but retain
-      //                                     computerDenote, userCharacter, currentPlayer & saveState
       return {
         ...initialState,
         currentPlayer: state.currentPlayer,
@@ -135,17 +136,35 @@ const gameReducers = (state = initialState, action) => {
         userCharacter: state.userCharacter,
         saveState: state.saveState,
       };
-    // return state;
     case types.RESTART_SESSION:
-      return state;
+      const previousBoardSize = state.boardSlots.length
+        ? Math.sqrt(state.boardSlots.length)
+        : null;
+      return {
+        ...state,
+        gameOver: false,
+        drawGame: false,
+        currentPlayer: state.userCharacter,
+        boardSlots: previousBoardSize
+          ? [...Array(previousBoardSize ** 2).keys()].map((d) => null)
+          : [],
+        size: previousBoardSize ? previousBoardSize : 0,
+        boardDistribution: previousBoardSize
+          ? parseFloat(100 / previousBoardSize).toFixed(4) + "%"
+          : "100%",
+        computerDenote: state.currentPlayer === "x" ? "o" : "x",
+        description: "",
+      };
     case types.CHANGE_USER_CHARACTER:
       newState.currentPlayer = state.userCharacter === "x" ? "o" : "x";
       newState.userCharacter = state.userCharacter === "x" ? "o" : "x";
       newState.computerDenote = newState.userCharacter === "x" ? "o" : "x";
+      newState.description = "";
       return newState;
     case types.CHANGE_SESSION_PRESERVATION:
       newState.saveState = newState.saveState === true ? false : true;
       !newState.saveState ? removeState() : saveState();
+      newState.description = "";
       return newState;
     default:
       return state;
