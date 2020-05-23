@@ -6,7 +6,7 @@ import BoardActions from "../components/BoardActions.jsx";
 import * as playActions from "../actions/actions";
 
 const mapStateToProps = (state) => {
-  console.log("Game Container Props Mapped", state);
+  // console.log("Game Container Props Mapped", state);
   return {
     gameBoardSize: state.game.size,
     gameSessionOver: state.game.gameOver,

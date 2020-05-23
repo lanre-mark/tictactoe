@@ -7,7 +7,7 @@ const BoardActions = (props) => {
       <div
         className="action__session"
         onClick={(e) => {
-          props.onRestartSession();
+          // props.onRestartSession();
         }}
       >
         Restart Session
