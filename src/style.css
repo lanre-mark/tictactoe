@@ -260,7 +260,7 @@ body {
 
 .player__label {
   display: flex;
-  justify-cotent: center;
+  justify-content: center;
   align-items: center;
   background: #f7f4ff;
   padding: 0 10px 0 20px;
@@ -350,7 +350,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #f7f4ff;
+  background: #f2f2f2;
   padding: 0 10px 0 20px;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
@@ -374,15 +374,14 @@ body {
 }
 
 .preserve__icon {
-  width: 40px;
+  width: 50px;
   height: 40px;
-  background: #ffbec6;
+  background: #c0c0c0;
   display: flex;
   justify-content: center;
   align-items: center;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
-  padding-left: 8px;
 }
 
 .preserve__icon--enter {
