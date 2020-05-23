@@ -1,27 +1,31 @@
 export const loadState = () => {
   try {
-    // console.log("Loading State");
-    const serializedState = localStorage.getItem("game");
+    const serializedState = localStorage.getItem("ttt-game");
     if (serializedState === null) {
-      // console.log("But nothing yet in state");
       return undefined;
     }
     const stateObj = JSON.parse(serializedState);
-    // temporarily return null until computer simulation is completed
-    return undefined; //stateObj;
+    return stateObj;
   } catch (err) {
-    // console.log("loading State Error ::", err);
-    return undefined;
+    console.log("loading State Error ::", err);
   }
 };
 
 export const saveState = (state) => {
   try {
-    // console.log("Saving State");
     const serializedState = JSON.stringify(state);
-    localStorage.setItem("game", serializedState);
+    localStorage.setItem("ttt-game", serializedState);
   } catch (err) {
     // ignore write errors
     // console.log("Saving State Error ::", err);
+  }
+};
+
+export const removeState = () => {
+  try {
+    localStorage.removeItem("ttt-game");
+  } catch (err) {
+    // ignore write errors
+    // console.log("Remving State Error ::", err);
   }
 };

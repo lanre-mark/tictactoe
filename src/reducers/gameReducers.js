@@ -1,5 +1,6 @@
 import * as types from "../actions/actionTypes";
 import winnerOnBoard from "../bl/ttt-logic";
+import { removeState, saveState } from "../localStorage.js";
 
 const initialState = {
   gameOver: false,
@@ -141,10 +142,10 @@ const gameReducers = (state = initialState, action) => {
       newState.currentPlayer = state.userCharacter === "x" ? "o" : "x";
       newState.userCharacter = state.userCharacter === "x" ? "o" : "x";
       newState.computerDenote = newState.userCharacter === "x" ? "o" : "x";
-      console.log("User Character Change State : ", newState);
       return newState;
     case types.CHANGE_SESSION_PRESERVATION:
       newState.saveState = newState.saveState === true ? false : true;
+      !newState.saveState ? removeState() : saveState();
       return newState;
     default:
       return state;
