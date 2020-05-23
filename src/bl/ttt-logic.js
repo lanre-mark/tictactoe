@@ -57,8 +57,8 @@ const unPlayedPositionToindex = (boardSize, identifiedSpot, directionCode) => {
 const spoilerMove = (directRow) => {
   for (let ii = 0; ii < directRow.plays.length; ii++) {
     if (!directRow.plays[ii]) {
-      console.log("Location to Spoil ::", ii);
-      console.log(directRow);
+      // console.log("Location to Spoil ::", ii);
+      // console.log(directRow);
       return unPlayedPositionToindex(directRow.plays.length, ii, directRow.pos);
     }
   }
@@ -164,7 +164,7 @@ const freeStyleMove = (state) => {
       frT = 0;
       compensateMove = true;
       availDirection = compensateSyles[frT](state.slice());
-      console.log("Compensate move activated");
+      // console.log("Compensate move activated");
     }
     // console.log("freeStyles :: ", availDirection);
     if (availDirection.length > 0) {
@@ -181,7 +181,7 @@ const freeStyleMove = (state) => {
     }
     // console.log("Adding " + frT + " to ", trials);
     if (compensateMove) {
-      console.log("Compensate move unsuccessful");
+      // console.log("Compensate move unsuccessful");
       // means we have moved from compensateStyles cos there is no more available
       // slots on the board to play using the computer's character
       // hence we've had to play anywhere on the board
@@ -190,7 +190,7 @@ const freeStyleMove = (state) => {
     }
     !trials.includes(frT) ? trials.push(frT) : null;
   }
-  console.log("Returning back with nothing");
+  // console.log("Returning back with nothing");
   return -2;
 };
 
@@ -286,13 +286,13 @@ const winnerOnBoard = (strucData, cp, up, simulate = false) => {
   if (!win) {
     // if there is no winner yet
     // check if there is a draw
-    console.log("Let's check for a draw");
-    console.log(newDirections);
-    console.log(
-      "Disqualified Directions ",
-      newDirections.filter((mv) => mv.cp > 0 && mv.up > 0).length
-    );
-    console.log("All available directions :: ", newDirections.length);
+    // console.log("Let's check for a draw");
+    // console.log(newDirections);
+    // console.log(
+    //   "Disqualified Directions ",
+    //   newDirections.filter((mv) => mv.cp > 0 && mv.up > 0).length
+    // );
+    // console.log("All available directions :: ", newDirections.length);
     draw =
       !strucData.includes(null) ||
       newDirections.filter((mv) => mv.cp > 0 && mv.up > 0).length ===
@@ -331,10 +331,11 @@ const winnerOnBoard = (strucData, cp, up, simulate = false) => {
       compuMove = freeStyleMove(newDirections); //, FREE_STYLE.COMMENCE);
       draw = compuMove === -2 ? true : false;
     }
-    console.log("Proposed Moved :: ", compuMove);
-  } else {
-    console.log("No proposed move");
+    // console.log("Proposed Moved :: ", compuMove);
   }
+  // else {
+  //   console.log("No proposed move");
+  // }
   return [win, draw, compuMove]; // will be returning a double tuple of winState, drawState, nextComputerPlay
 };
 
