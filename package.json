@@ -12,6 +12,7 @@
   "license": "MIT",
   "dependencies": {
     "@material-ui/icons": "^4.9.1",
+    "gh-pages": "^2.2.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-redux": "^5.0.6",
