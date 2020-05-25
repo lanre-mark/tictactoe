@@ -36,8 +36,8 @@ The author of the above codepen, https://github.com/MariuszDabrowski is a collea
 
 ## Upcoming Features
 
-- a more intuituve business logic for simulating computer moves
-- ability to predict a user's move
-- animated winning direction
+- [ ] A more intuituve business logic for simulating computer moves
+- [ ] Ability to predict a user's move
+- [ ] Animated winning direction
 
 Please feel free to fork and improve this repo and you're very welcomed to creata a PR.
