@@ -6,10 +6,13 @@
   "scripts": {
     "build": "webpack",
     "start": "webpack-dev-server --hot --inline --progress --colors --watch",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "author": "Lanre Makinde",
   "license": "MIT",
+  "homepage": "https://github.com/lanre-mark/react-redux-playground",
   "dependencies": {
     "@material-ui/icons": "^4.9.1",
     "gh-pages": "^2.2.0",
