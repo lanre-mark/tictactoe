@@ -25,9 +25,14 @@ The author of the above codepen, https://github.com/MariuszDabrowski is a collea
 
 ## Learning objectives
 
-- Using JavaScript to change the look and behavior of the DOM
-- React to user input
-- Utilize object-oriented programming
+- React to user selection.
+- Utilize React redux data flow
+- Utilize React passing down of props
+- Update state from child components
+- Use JSX and Webpack
+- Animations in react
+- Integration of web browser's local storage
+- React Shared Component & Container Design Pattern
 
 ## Upcoming Features
 
