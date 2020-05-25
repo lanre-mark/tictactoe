@@ -24,7 +24,7 @@ const mapDispatchToProps = (dispatch) => ({
   },
   onPreservationChange: () => {
     //e, preservationStatus
-    console.log("Click action on Preservation Change :: ");
+    // console.log("Click action on Preservation Change :: ");
     dispatch(gameActions.changePreservation());
   },
 });
