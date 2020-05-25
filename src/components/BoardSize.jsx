@@ -2,7 +2,7 @@ import React from "react";
 
 const BoardSize = (props) => {
   // console.log("BoardSize Props::", props);
-  const availableSizes = [3, 5, 7, 9, 11, 13, 15, 17];
+  const availableSizes = [3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25];
   return (
     <div className="keys">
       {availableSizes.map((sz, ndx) => (
