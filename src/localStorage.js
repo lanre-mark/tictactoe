@@ -1,6 +1,7 @@
 export const loadState = () => {
   try {
     const serializedState = localStorage.getItem("ttt-game");
+    serializedState ? updateStyle(JSON.parse(serializedState).game.size) : null;
     if (serializedState === null) {
       return undefined;
     }
@@ -28,4 +29,11 @@ export const removeState = () => {
     // ignore write errors
     // console.log("Remving State Error ::", err);
   }
+};
+
+export const updateStyle = (prp) => {
+  document.documentElement.style.setProperty(
+    "--proportion",
+    parseFloat(100 / prp).toFixed(4) + "%"
+  );
 };

@@ -1,6 +1,6 @@
 import * as types from "../actions/actionTypes";
 import winnerOnBoard from "../bl/ttt-logic";
-import { removeState, saveState } from "../localStorage.js";
+import { removeState, saveState, updateStyle } from "../localStorage.js";
 
 const initialState = {
   gameOver: false,
@@ -22,6 +22,7 @@ const gameReducers = (state = initialState, action) => {
   switch (action.type) {
     case types.TICK_BOARD:
       if (!newState.gameOver && !newState.drawGame) {
+        // console.log("Played :: ", action.payload);
         newState.boardSlots = [...state.boardSlots];
         newState.boardSlots[action.payload] = newState.currentPlayer;
         newState.currentPlayer = newState.currentPlayer === "x" ? "o" : "x";
@@ -69,10 +70,9 @@ const gameReducers = (state = initialState, action) => {
        * but this hacky way solves this idea of flexibility in the gameBoard
        * based on the size selected
        */
-      document.documentElement.style.setProperty(
-        "--proportion",
-        parseFloat(100 / action.payload).toFixed(4) + "%"
-      );
+
+      updateStyle(action.payload);
+
       /**
        * END NOT SURE
        */
