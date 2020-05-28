@@ -32,6 +32,7 @@ const mapDispatchToProps = (dispatch) => ({
   },
   restartSession: () => {
     dispatch(playActions.restartGameSession());
+    window.location.reload(false);
   },
 });
 
