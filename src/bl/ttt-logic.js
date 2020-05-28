@@ -44,13 +44,13 @@ const indexToCodify = (ndx, bz) => {
  */
 const unPlayedPositionToindex = (boardSize, identifiedSpot, directionCode) => {
   if (directionCode.charAt(0) === "D") {
-    return directionCode.charAt(1) === "1"
+    return directionCode.substr(1) === "1"
       ? identifiedSpot * boardSize + identifiedSpot // L-R diagonal
       : identifiedSpot * boardSize + (boardSize - identifiedSpot - 1); // R- L diagonal // reverse identifiedSport using boardSize as magnitude
   } else {
     return directionCode.charAt(0) === "H"
-      ? boardSize * (parseInt(directionCode.charAt(1)) - 1) + identifiedSpot // row direction // multiple the boardSize by number in the direction less by 1 for zero index and add the indentifiedSpot
-      : boardSize * identifiedSpot + (parseInt(directionCode.charAt(1)) - 1); // column direction // multiple the boardSize by the identifiedSpot and add the column in the code
+      ? boardSize * (parseInt(directionCode.substr(1)) - 1) + identifiedSpot // row direction // multiple the boardSize by number in the direction less by 1 for zero index and add the indentifiedSpot
+      : boardSize * identifiedSpot + (parseInt(directionCode.substr(1)) - 1); // column direction // multiple the boardSize by the identifiedSpot and add the column in the code
   }
 };
 
@@ -142,7 +142,6 @@ const freeStyleMove = (state) => {
       );
     }, //computer plays with user plays
     2: (currState) => {
-      // console.log("currState", currState);
       return currState.filter((inDirection) => inDirection.pls === 0);
     }, //no user nor compuer plays
   };
@@ -166,6 +165,7 @@ const freeStyleMove = (state) => {
       availDirection = compensateSyles[frT](state.slice());
       // console.log("Compensate move activated");
     }
+
     // console.log("freeStyles :: ", availDirection);
     if (availDirection.length > 0) {
       const randomDirection = randomizeType(availDirection.length);
@@ -174,7 +174,6 @@ const freeStyleMove = (state) => {
         unplayedSlotsOnly(availDirection[randomDirection].plays),
         availDirection[randomDirection].pos
       );
-      // console.log(whtWe);
       if (whtWe >= 0) {
         return whtWe;
       }

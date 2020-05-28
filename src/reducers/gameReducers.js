@@ -22,6 +22,7 @@ const gameReducers = (state = initialState, action) => {
   switch (action.type) {
     case types.TICK_BOARD:
       if (!newState.gameOver && !newState.drawGame) {
+        // console.log("Played :: ", action.payload);
         newState.boardSlots = [...state.boardSlots];
         newState.boardSlots[action.payload] = newState.currentPlayer;
         newState.currentPlayer = newState.currentPlayer === "x" ? "o" : "x";
